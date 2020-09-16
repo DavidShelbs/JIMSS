@@ -41,44 +41,44 @@ Requirements:
 
 Scope Creep Nightmare:
 
-Possible point system
+    Possible point system
 
--   Going to the gym and using equipment gives points
--   Leader board with friends
+    -   Going to the gym and using equipment gives points
+    -   Leader board with friends
 
-Maybe an API for food suggestions
+    Maybe an API for food suggestions
 
--   Keep track of calories
--   Help plan meals
+    -   Keep track of calories
+    -   Help plan meals
 
-Integration with Google Fit for monitoring heart rate and calories
-burned
+    Integration with Google Fit for monitoring heart rate and calories
+    burned
 
-Timer notification for hour limit
+    Timer notification for hour limit
 
-Social feed for workouts/IM events/sports
+    Social feed for workouts/IM events/sports
 
-Request workout partner/spotter/pick up game
+    Request workout partner/spotter/pick up game
 
  
 
 Timeline:
 
-Weeks 1 - 5
+    Weeks 1 - 5
 
--   QR part
--   Set up users
+    -   QR part
+    -   Set up users
 
-Weeks 6 - 10
+    Weeks 6 - 10
 
--   Add friends
--   Database to keep track of workouts
+    -   Add friends
+    -   Database to keep track of workouts
 
-Weeks 11 - 15
+    Weeks 11 - 15
 
--   Gym capacity
--   About/info page
--   Perfect layout and design
+    -   Gym capacity
+    -   About/info page
+    -   Perfect layout and design
 
  
 
