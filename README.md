@@ -1,4 +1,4 @@
-JIM'SS
+# JIM'SS
 
 I had an idea for an app that could be used by people that go to the gym
 on campus to track workouts. For this app to work, a QR code would need
@@ -18,24 +18,24 @@ similar workout goals and abilities as you.
 
 Requirements:
 
-App should be able to scan QR codes on gym equipment
+    App should be able to scan QR codes on gym equipment
 
--   Show how to use equipment
--   Keep track of workout using that machine
--   Synced with pre-planned workout
--   Show past exercise (sets, weight, reps)
--   Pulls up app if app not installed
+    -   Show how to use equipment
+    -   Keep track of workout using that machine
+    -   Synced with pre-planned workout
+    -   Show past exercise (sets, weight, reps)
+    -   Pulls up app if app not installed
 
-Users should be able to create a workout plan and track their progress
+    Users should be able to create a workout plan and track their progress
 
-Capacity of gym on home page (google as backup)
+    Capacity of gym on home page (google as backup)
 
-Specific Gym info 
+    Specific Gym info 
 
-Users can become friends with each other
+    Users can become friends with each other
 
--   See each others workout plans
--   Schedule time to workout together
+    -   See each others workout plans
+    -   Schedule time to workout together
 
  
 
