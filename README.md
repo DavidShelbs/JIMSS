@@ -1,4 +1,5 @@
-#JIM'SS
+# JIM'SS
+
 I had an idea for an app that could be used by people that go to the gym on campus to track workouts. For this app to work, a QR code would need to be placed on each machine in the gym. When you begin using a machine, you would simply scan the QR code and the app would give you options to track a workout related to that machine. This app would also be able to help you stay on track with your workout goals. You would be able to create your own workout plan or use recommendations from the app based off of your recent activity. If it would be allowed by the school, the app could also show gym capacity and usual peak hours so you can plan a time to go when it is not super busy. During COVID, the app could display reminders to wipe down equipment after using it. After COVID, the app could be used as a social network to find a workout partner with similar workout goals and abilities as you.
 
 <span style="font-weight: 400;">Requirements:</span>
