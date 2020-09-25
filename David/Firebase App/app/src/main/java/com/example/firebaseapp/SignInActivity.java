@@ -25,7 +25,6 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
     private Button mSignInButton;
-    private Button mSignOutButton;
 
 
     @Override
@@ -33,17 +32,10 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         mSignInButton = (Button) findViewById(R.id.signInButton);
-        mSignOutButton = (Button) findViewById(R.id.signOutButton);
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createSignInIntent();
-            }
-        });
-        mSignOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
             }
         });
     }
