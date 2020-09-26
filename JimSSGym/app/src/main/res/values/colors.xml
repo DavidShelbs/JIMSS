@@ -3,4 +3,9 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="LIMA">#78BE20</color>
+    <color name="APPLE">#509E2F</color>
+    <color name="MINERGREEN">#007A33</color>
+    <color name="CANDLELIGHT">#FDDA24</color>
+    <color name="ORIENT">#005F83</color>
 </resources>
