@@ -37,6 +37,9 @@ public abstract class DetailActivity extends AppCompatActivity implements WeekVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         title = findViewById(R.id.title_tv);
 //        wod = findViewById(R.id.wod_tv);
 
