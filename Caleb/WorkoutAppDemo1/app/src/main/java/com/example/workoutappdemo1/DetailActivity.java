@@ -49,8 +49,6 @@ public abstract class DetailActivity extends AppCompatActivity implements WeekVi
 //            wod.setText(w);
         }
 
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_detail);
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
@@ -67,10 +65,6 @@ public abstract class DetailActivity extends AppCompatActivity implements WeekVi
 
         // Set long press listener for empty view
         mWeekView.setEmptyViewLongPressListener(this);
-
-        // Set up a date time interpreter to interpret how the date and time will be formatted in
-        // the week view. This is optional.
-//        setupDateTimeInterpreter(false);
 
     }
 
