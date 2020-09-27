@@ -17,13 +17,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:id="@+id/wod_tv"
-        android:layout_gravity="left"
-        android:layout_margin="12dp"
-        android:textSize="24sp"
-        android:text="Title"
+<!--    <TextView-->
+<!--        android:id="@+id/wod_tv"-->
+<!--        android:layout_gravity="left"-->
+<!--        android:layout_margin="12dp"-->
+<!--        android:textSize="24sp"-->
+<!--        android:text="Title"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+    <com.alamkanak.weekview.WeekView
+        android:id="@+id/weekView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        app:eventTextColor="@android:color/white"
+        app:textSize="12sp"
+        app:hourHeight="60dp"
+        app:headerColumnPadding="8dp"
+        app:headerColumnTextColor="#8f000000"
+        app:headerRowPadding="12dp"
+        app:columnGap="8dp"
+        app:noOfVisibleDays="3"
+        app:headerRowBackgroundColor="#ffefefef"
+        app:dayBackgroundColor="#05000000"
+        app:todayBackgroundColor="#1848adff"
+        app:headerColumnBackground="#ffffffff">
+
+    </com.alamkanak.weekview.WeekView>
+
 
 </LinearLayout>
