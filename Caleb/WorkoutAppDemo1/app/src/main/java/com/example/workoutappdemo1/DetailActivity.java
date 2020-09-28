@@ -23,8 +23,7 @@ import java.util.Locale;
 
 public abstract class DetailActivity extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
 
-    private TextView title;
-//    private TextView wod;
+    private TextView name;
 
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
@@ -40,16 +39,11 @@ public abstract class DetailActivity extends AppCompatActivity implements WeekVi
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        title = findViewById(R.id.title_tv);
-//        wod = findViewById(R.id.wod_tv);
-
+        name = findViewById(R.id.title_tv);
         Bundle extra = getIntent().getExtras();
         if (extra != null){
-            String t = extra.getString("EXTRA_TITLE");
-//            String w = extra.getString("EXTRA_WOD");
-
-            title.setText(t);
-//            wod.setText(w);
+            String t = extra.getString("EXTRA_NAME");
+            name.setText(t);
         }
 
 

@@ -11,12 +11,23 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ListView lv;
-    private ArrayList<Workout> wodList;
-    private ArrayList<String> titleList;
+
+    private ArrayList<String> nameList;
+    private ArrayList<Workout> mondayList;
+    private ArrayList<Workout> tuesdayList;
+    private ArrayList<Workout> wednesdayList;
+    private ArrayList<Workout> thursdayList;
+    private ArrayList<Workout> fridayList;
+    private ArrayList<Workout> saturdayList;
+    private ArrayList<Workout> sundayList;
+
+
+
     private Adapter adapter;
 
 
@@ -26,14 +37,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         lv = findViewById(R.id.lv);
 
-        wodList = DataHelper.loadWorkout(this);
-        titleList = new ArrayList<>();
-        for (int i = 0; i<wodList.size(); i++){
-            String str = wodList.get(i).getTitle();
-            titleList.add(str);
+        nameList = new ArrayList<>();
+        mondayList = DataHelper.loadWorkout(this);
+        tuesdayList = DataHelper.loadWorkout(this);
+        wednesdayList = DataHelper.loadWorkout(this);
+        thursdayList = DataHelper.loadWorkout(this);
+        fridayList = DataHelper.loadWorkout(this);
+        saturdayList = DataHelper.loadWorkout(this);
+        sundayList = DataHelper.loadWorkout(this);
+        for (int i = 0; i<mondayList.size(); i++){
+            String str = mondayList.get(i).getName();
+            nameList.add(str);
         }
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titleList);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameList);
         lv.setAdapter((ListAdapter) adapter);
         lv.setOnItemClickListener(this);
     }
@@ -41,11 +58,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int pos, long l) {
         Intent intent = new Intent(MainActivity.this, BasicActivity.class);
-        String title = wodList.get(pos).getTitle();
-        String wod = wodList.get(pos).getWod();
+        String name = mondayList.get(pos).getName();
+        String monday = mondayList.get(pos).getMonday();
+        String tuesday = tuesdayList.get(pos).getTuesday();
+        String wednesday = wednesdayList.get(pos).getWednesday();
+        String thursday = thursdayList.get(pos).getThursday();
+        String friday = fridayList.get(pos).getFriday();
+        String saturday = saturdayList.get(pos).getSaturday();
+        String sunday = sundayList.get(pos).getSunday();
 
-        intent.putExtra("EXTRA_TITLE", title);
-        intent.putExtra("EXTRA_WOD", wod);
+        intent.putExtra("EXTRA_NAME", name);
+        intent.putExtra("EXTRA_MONDAY", monday);
+        intent.putExtra("EXTRA_TUESDAY", tuesday);
+        intent.putExtra("EXTRA_WEDNESDAY", wednesday);
+        intent.putExtra("EXTRA_THURSDAY", thursday);
+        intent.putExtra("EXTRA_FRIDAY", friday);
+        intent.putExtra("EXTRA_SATURDAY", saturday);
+        intent.putExtra("EXTRA_SUNDAY", sunday);
 
         startActivity(intent);
     }

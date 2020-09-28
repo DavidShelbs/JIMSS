@@ -30,13 +30,20 @@ public class DataHelper {
 
         try {
             JSONObject obj = new JSONObject(json);
-            JSONArray jsonArray = obj.getJSONArray("girlsBenchmark");
+            JSONArray jsonArray = obj.getJSONArray("friends");
 
             for (int i = 0; i <jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Workout workout = new Workout();
-                workout.setTitle(jsonObject.getString("title"));
-                workout.setWod(jsonObject.getString("wod"));
+
+                workout.setName(jsonObject.getString("name"));
+                workout.setMonday(jsonObject.getString("monday"));
+                workout.setTuesday(jsonObject.getString("tuesday"));
+                workout.setWednesday(jsonObject.getString("wednesday"));
+                workout.setThursday(jsonObject.getString("thursday"));
+                workout.setFriday(jsonObject.getString("friday"));
+                workout.setSaturday(jsonObject.getString("saturday"));
+                workout.setSunday(jsonObject.getString("sunday"));
 
                 workouts.add(workout);
 
