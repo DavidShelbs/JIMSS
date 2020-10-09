@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-class Workout {
+class ScheduleModel {
 
     private String name;
     private String monday;
@@ -16,7 +16,7 @@ class Workout {
     private String saturday;
     private String sunday;
 
-    public Workout(String name, String monday, String tuesday, String wednesday,String thursday, String friday,String saturday, String sunday) {
+    public ScheduleModel(String name, String monday, String tuesday, String wednesday, String thursday, String friday, String saturday, String sunday) {
         this.name = name;
         this.monday = monday;
         this.tuesday = tuesday;
@@ -27,7 +27,7 @@ class Workout {
         this.sunday = sunday;
     }
 
-    public Workout() { }
+    public ScheduleModel() { }
 
 
     public String getName() {

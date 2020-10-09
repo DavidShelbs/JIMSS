@@ -11,20 +11,19 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class FriendsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ListView lv;
 
     private ArrayList<String> nameList;
-    private ArrayList<Workout> mondayList;
-    private ArrayList<Workout> tuesdayList;
-    private ArrayList<Workout> wednesdayList;
-    private ArrayList<Workout> thursdayList;
-    private ArrayList<Workout> fridayList;
-    private ArrayList<Workout> saturdayList;
-    private ArrayList<Workout> sundayList;
+    private ArrayList<ScheduleModel> mondayList;
+    private ArrayList<ScheduleModel> tuesdayList;
+    private ArrayList<ScheduleModel> wednesdayList;
+    private ArrayList<ScheduleModel> thursdayList;
+    private ArrayList<ScheduleModel> fridayList;
+    private ArrayList<ScheduleModel> saturdayList;
+    private ArrayList<ScheduleModel> sundayList;
 
 
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_friends);
         lv = findViewById(R.id.lv);
 
         nameList = new ArrayList<>();
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int pos, long l) {
-        Intent intent = new Intent(MainActivity.this, BasicActivity.class);
+        Intent intent = new Intent(FriendsActivity.this, FillCalenderActivity.class);
         String name = mondayList.get(pos).getName();
         String monday = mondayList.get(pos).getMonday();
         String tuesday = tuesdayList.get(pos).getTuesday();
