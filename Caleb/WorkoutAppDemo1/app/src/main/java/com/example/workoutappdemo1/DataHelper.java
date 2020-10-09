@@ -12,12 +12,12 @@ import java.util.ArrayList;
 
 public class DataHelper {
 
-    public static ArrayList<Workout> loadWorkout(Context context){
-        ArrayList<Workout> workouts = new ArrayList<>();
+    public static ArrayList<ScheduleModel> loadWorkout(Context context){
+        ArrayList<ScheduleModel> scheduleModels = new ArrayList<>();
         String json = "";
 
         try{
-            InputStream is = context.getAssets().open("data.json");
+            InputStream is = context.getAssets().open("dataFriends.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -34,18 +34,18 @@ public class DataHelper {
 
             for (int i = 0; i <jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Workout workout = new Workout();
+                ScheduleModel scheduleModel = new ScheduleModel();
 
-                workout.setName(jsonObject.getString("name"));
-                workout.setMonday(jsonObject.getString("monday"));
-                workout.setTuesday(jsonObject.getString("tuesday"));
-                workout.setWednesday(jsonObject.getString("wednesday"));
-                workout.setThursday(jsonObject.getString("thursday"));
-                workout.setFriday(jsonObject.getString("friday"));
-                workout.setSaturday(jsonObject.getString("saturday"));
-                workout.setSunday(jsonObject.getString("sunday"));
+                scheduleModel.setName(jsonObject.getString("name"));
+                scheduleModel.setMonday(jsonObject.getString("monday"));
+                scheduleModel.setTuesday(jsonObject.getString("tuesday"));
+                scheduleModel.setWednesday(jsonObject.getString("wednesday"));
+                scheduleModel.setThursday(jsonObject.getString("thursday"));
+                scheduleModel.setFriday(jsonObject.getString("friday"));
+                scheduleModel.setSaturday(jsonObject.getString("saturday"));
+                scheduleModel.setSunday(jsonObject.getString("sunday"));
 
-                workouts.add(workout);
+                scheduleModels.add(scheduleModel);
 
             }
         } catch (JSONException e) {
@@ -53,6 +53,6 @@ public class DataHelper {
         }
 
 
-        return workouts;
+        return scheduleModels;
     }
 }
