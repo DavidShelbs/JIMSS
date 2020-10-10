@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         friends_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(MainActivity.this, FriendsActivity.class));
             }
         });
 
