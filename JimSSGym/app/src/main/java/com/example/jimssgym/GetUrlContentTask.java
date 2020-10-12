@@ -1,52 +1,46 @@
-package com.example.jimssgym;
-
-import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-
-public class GetUrlContentTask extends AsyncTask<String, Integer, String> {
-    Context context;
-    public GetUrlContentTask(Context context) {
-        this.context = context;
-    }
-    protected String doInBackground(String... urls) {
-        URL url = null;
-        try {
-            url = new URL(urls[0]);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
-            for (String line; (line = reader.readLine()) != null;) {
-                System.out.println(line);
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    protected void onProgressUpdate(Integer... progress) {
-    }
-
-    protected void onPostExecute(String result) {
-        // this is executed on the main thread after the process is over
-        // update your UI here
-        TextView exerciseDescription = (TextView) ((Activity) context).findViewById(R.id.exerciseDescription);
-        exerciseDescription.setText(result);
-    }
-}
+//package com.example.jimssgym;
+//
+//import android.app.Activity;
+//import android.content.Context;
+//import android.graphics.drawable.Drawable;
+//import android.os.AsyncTask;
+//import android.util.Pair;
+//import android.widget.TextView;
+//
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.io.InputStreamReader;
+//import java.io.UnsupportedEncodingException;
+//import java.net.MalformedURLException;
+//import java.net.URL;
+//
+//public class GetUrlContentTask extends AsyncTask<Object, Integer, Pair<QuickScanCardViewModel, Drawable>> {
+//
+//    Drawable result;
+//    QuickScanCardViewModel m;
+//
+//     protected Pair<QuickScanCardViewModel, Drawable> doInBackground(Object... urls) {
+//        String url = (String) urls[0];
+//        QuickScanCardViewModel m = (QuickScanCardViewModel) urls[1];
+//        InputStream is = null;
+//        try {
+//            is = (InputStream) new URL(url).getContent();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        result = Drawable.createFromStream(is, "src name");
+//        m.setImg(result);
+//        Pair<QuickScanCardViewModel, Drawable> pair = new Pair<>(m, result);
+//        return pair;
+//    }
+//
+//    protected void onProgressUpdate(Integer... progress) {
+//    }
+//
+//    protected void onPostExecute(Pair<QuickScanCardViewModel, Drawable> result) {
+//        // this is executed on the main thread after the process is over
+//        // update your UI here
+//        result.first.setImg(result.second);
+//    }
+//}

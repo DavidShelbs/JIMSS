@@ -1,5 +1,7 @@
 package com.example.jimssgym;
 
+import android.graphics.drawable.Drawable;
+
 public class QuickScanCardViewModel {
 
     private String title, description;

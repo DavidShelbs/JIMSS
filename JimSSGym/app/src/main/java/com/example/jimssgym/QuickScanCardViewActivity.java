@@ -1,28 +1,10 @@
 package com.example.jimssgym;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,8 +18,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import pl.droidsonroids.gif.GifImageView;
 
 public class QuickScanCardViewActivity extends AppCompatActivity {
 
@@ -68,7 +48,7 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
 
         ArrayList<QuickScanCardViewModel> models = new ArrayList<>();
 
-        InputStream machines_json = getResources().openRawResource(R.raw.machines_json);
+        InputStream machines_json = getResources().openRawResource(R.raw.equipment_json);
         BufferedReader machines_reader = new BufferedReader(new InputStreamReader(machines_json, Charset.forName("UTF-8")));
         String machines_lines = "";
         try {
@@ -92,6 +72,41 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
                                             JSONObject exerciseObject = exercisesArray.getJSONObject(j);
                                             String equipment_string = exerciseObject.getString("equipment");
                                             String exercise_name = exerciseObject.getString("name");
+                                            String exercise_id = exerciseObject.getString("id");
+
+                                            InputStream images_json = getResources().openRawResource(R.raw.image_json);
+                                            BufferedReader images_reader = new BufferedReader(new InputStreamReader(images_json, Charset.forName("UTF-8")));
+                                            String images_lines = "";
+                                            try {
+                                                while ((images_lines = images_reader.readLine()) != null) {
+                                                    JSONArray imagesArray = new JSONArray(images_lines);
+                                                    for (int l = 0; l < imagesArray.length(); l++) {
+                                                        try {
+                                                            JSONObject imagesObject = imagesArray.getJSONObject(l);
+                                                            String images_exercise = imagesObject.getString("exercise");
+                                                            if (images_exercise.toLowerCase().equals(exercise_id.toLowerCase())) {
+                                                                String image_id = imagesObject.getString("id");
+                                                                String image_name = "exercise_image_" + image_id;
+                                                                int id = getApplicationContext().getResources().getIdentifier(image_name, "drawable", getApplicationContext().getPackageName());
+//                                                                new GetUrlContentTask().execute(imagesObject.getString("image"), m);
+                                                                m.setImg(id);
+                                                                break;
+                                                            }
+                                                            else {
+                                                                int id = getApplicationContext().getResources().getIdentifier("no_image_available", "drawable", getApplicationContext().getPackageName());
+                                                                m.setImg(id);
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                }
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
                                             String muscle_string = exerciseObject.getString("muscles");
                                             muscle_string = muscle_string.substring(1, muscle_string.length() - 1);
                                             String muscles[] = muscle_string.split(",");
