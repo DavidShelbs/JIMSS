@@ -3,6 +3,7 @@ package com.example.jimssgym;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,8 +30,10 @@ public class QuickScanCardViewHolder extends RecyclerView.ViewHolder {
         context = view.getContext();
         view.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
+                Bundle extras = new Bundle();
+                extras.putCharSequence("QR_RESULT", exerciseTitle.getText());
                 Intent intent = new Intent(context, QuickScanActivity.class);
-                intent.putExtra("QR_RESULT", exerciseTitle.getText());
+                intent.putExtras(extras);
                 context.startActivity(intent);
             }
         });
