@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">UserSetup</string>
+    <string name="enter_height_inches">Enter Height (inches)</string>
+    <string name="enter_weight_lbs">Enter Weight (lbs)</string>
 
     <string-array name="goal_entries">
+        <item> Select </item>;
         <item> Lose Weight </item>;
         <item> Build Muscle </item>;
         <item> Improve Mobility / Flexibility </item>;
@@ -12,6 +15,7 @@
     </string-array>
 
     <string-array name="workout_level">
+        <item> Select </item>;
         <item> Beginner </item>;
         <item> Intermediate </item>;
         <item> Advanced </item>;
