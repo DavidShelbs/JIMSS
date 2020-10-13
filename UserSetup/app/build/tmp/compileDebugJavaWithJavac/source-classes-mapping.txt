@@ -1,0 +1,4 @@
+com/example/usersetup/BuildConfig.java
+ com.example.usersetup.BuildConfig
+com/example/usersetup/MainActivity.java
+ com.example.usersetup.MainActivity
