@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void openNewActivity() {
-//        Intent intent = new Intent(this, NewActivity.class); //change NewActivity to the name of the class for the next activity
+        Intent intent = new Intent(this, NewActivity.class); //change NewActivity to the name of the class for the next activity
     }
 
     private boolean validateWeight() {
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String lI = levelInput.getSelectedItem().toString();
         if (lI.contentEquals("Select")) {
             ((TextView) levelInput.getSelectedView()).setTextColor(Color.RED);
-            ((TextView) levelInput.getSelectedView()).setText("Must choose a goal");
+            ((TextView) levelInput.getSelectedView()).setText("Must choose a workout level");
             return false;
         } else {
             ((TextView) levelInput.getSelectedView()).setError(null);
@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+        openNewActivity();
         MainActivity.this.finish();
         System.exit(0);
     }
