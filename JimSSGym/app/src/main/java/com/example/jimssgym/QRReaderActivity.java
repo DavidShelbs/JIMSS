@@ -37,6 +37,9 @@ public class QRReaderActivity extends AppCompatActivity {
         scanView = findViewById(R.id.scannerView);
         codeScanner = new CodeScanner( this, scanView);
 
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         codeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {

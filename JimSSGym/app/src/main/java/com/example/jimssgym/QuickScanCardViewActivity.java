@@ -50,6 +50,9 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quickscan_cardview);
         String qr_result = getIntent().getStringExtra("QR_RESULT");
 
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
