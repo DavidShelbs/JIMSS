@@ -10,4 +10,26 @@
     <string name="title_activity_basic">Basic Example</string>
     <string name="title_activity_asynchronous">Asynchronous Events</string>
     <string name="async_error">Could not download events from the internet</string>
+
+    <string name="enter_height_inches">Enter Height (inches)</string>
+    <string name="enter_weight_lbs">Enter Weight (lbs)</string>
+
+    <string-array name="goal_entries">
+        <item> Select </item>;
+        <item> Lose Weight </item>;
+        <item> Build Muscle </item>;
+        <item> Improve Mobility / Flexibility </item>;
+        <item> Improve Endurance </item>;
+        <item> Improve Definition </item>;
+        <item> Improve General Fitness </item>;
+        <item> Feel More Confident </item>;
+    </string-array>
+
+    <string-array name="workout_level">
+        <item> Select </item>;
+        <item> Beginner </item>;
+        <item> Intermediate </item>;
+        <item> Advanced </item>;
+    </string-array>
+
 </resources>

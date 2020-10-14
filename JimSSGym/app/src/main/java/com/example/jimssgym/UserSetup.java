@@ -1,11 +1,10 @@
-package com.example.usersetup;
+package com.example.jimssgym;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -13,20 +12,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class UserSetup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText weightInput;
     EditText heightInput;
@@ -49,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.user_setup);
 
         weightInput = (EditText) findViewById(R.id.weight);
         weightInput.setVisibility(View.VISIBLE);
@@ -74,15 +65,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //        disPlaySpinnerValues = (TextView) findViewById(R.id.background);
 
 
-//        nextButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                weightLBS = Integer.valueOf(weightInput.getText().toString());
-//                heightLBS = Integer.valueOf(heightInput.getText().toString());
-////                disPlaySpinnerValues.setText(goalFitVal+levelsFitVal);
-//                openNewActivity();
-//            }
-//        });
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!validateWeight() | !validateHeight() | !validateGoal() | !validateLevel()) {
+                    return;
+                }
+                openNewActivity();
+            }
+        });
     }
 
     @Override
@@ -101,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void openNewActivity() {
-        Intent intent = new Intent(this, NewActivity.class); //change NewActivity to the name of the class for the next activity
+        Intent intent = new Intent(this, MainActivity.class); //change NewActivity to the name of the class for the next activity
+        startActivity(intent);
     }
 
     private boolean validateWeight() {
@@ -189,9 +181,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        openNewActivity();
-        MainActivity.this.finish();
-        System.exit(0);
+        UserSetup.this.finish();
+//        System.exit(0);
     }
 }
 
