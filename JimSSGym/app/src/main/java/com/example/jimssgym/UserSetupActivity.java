@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.io.IOException;
 
 
-public class UserSetup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class UserSetupActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText weightInput;
     EditText heightInput;
@@ -40,7 +40,7 @@ public class UserSetup extends AppCompatActivity implements AdapterView.OnItemSe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_setup);
+        setContentView(R.layout.activity_user_setup);
 
         weightInput = (EditText) findViewById(R.id.weight);
         weightInput.setVisibility(View.VISIBLE);
@@ -181,7 +181,7 @@ public class UserSetup extends AppCompatActivity implements AdapterView.OnItemSe
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        UserSetup.this.finish();
+        UserSetupActivity.this.finish();
 //        System.exit(0);
     }
 }
