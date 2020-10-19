@@ -1,6 +1,8 @@
 package com.example.jimssgym;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -139,17 +141,24 @@ public abstract class CalenderActivity extends AppCompatActivity implements Week
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(CalenderActivity.this, PopUpWorkoutActivity.class));
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        Bundle extra = getIntent().getExtras();
+        if ("Your Calender".equals(extra.getString("EXTRA_NAME"))){
+            Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
-        Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+        Bundle extra = getIntent().getExtras();
+        if ("Your Calender".equals(extra.getString("EXTRA_NAME"))){
+            Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public WeekView getWeekView() {

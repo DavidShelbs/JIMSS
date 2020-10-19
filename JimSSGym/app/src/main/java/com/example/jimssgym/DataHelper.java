@@ -12,12 +12,12 @@ import java.util.ArrayList;
 
 public class DataHelper {
 
-    public static ArrayList<ScheduleModel> loadWorkout(Context context){
+    public static ArrayList<ScheduleModel> loadWorkout(Context context, String file){
         ArrayList<ScheduleModel> scheduleModels = new ArrayList<>();
         String json = "";
 
         try{
-            InputStream is = context.getAssets().open("dataFriends.json");
+            InputStream is = context.getAssets().open(file);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
