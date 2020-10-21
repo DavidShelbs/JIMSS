@@ -1,11 +1,16 @@
 package com.example.jimssgym;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,9 +21,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +47,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+
+import static java.lang.Thread.sleep;
 
 public class QuickScanActivity extends AppCompatActivity {
 
@@ -48,6 +65,7 @@ public class QuickScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quickscan);
+        isStoragePermissionGranted();
         View v = getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
         String qr_result = getIntent().getStringExtra("QR_RESULT");
@@ -67,7 +85,7 @@ public class QuickScanActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     add_workout(exercise_id);
-                } catch (JSONException e) {
+                } catch (JSONException | IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -93,10 +111,21 @@ public class QuickScanActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
+    public  boolean isStoragePermissionGranted() {
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            return false;
+        }
+    }
+
     private String readFromFile(Context context) {
         String ret = "";
         try {
-            InputStream inputStream = context.openFileInput("workout.txt");
+            InputStream inputStream = context.openFileInput("workouts.txt");
             if ( inputStream != null ) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -121,7 +150,7 @@ public class QuickScanActivity extends AppCompatActivity {
 
     private void writeToFile(String data, Context context) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("workout.txt", Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("workouts.txt", Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
@@ -130,57 +159,99 @@ public class QuickScanActivity extends AppCompatActivity {
         }
     }
 
-    private void add_workout(String exercise_id) throws JSONException {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String current_user_id = mAuth.getUid();
-        Context context = getApplicationContext();
-        String current_user_data = "";
-        current_user_data = readFromFile(context);
-
-        JSONObject workoutObject = new JSONObject();
-        JSONObject exerciseObject= new JSONObject();
-        JSONArray exerciseArray= new JSONArray();
-        JSONArray workoutArray;
-
-        if (current_user_data.equals("")) {
-            workoutArray = new JSONArray();
+    private void add_workout(final String exercise_id) throws JSONException, IOException, InterruptedException {
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://fir-app-1039b.appspot.com/");
+        StorageReference gsReference = storage.getReferenceFromUrl("gs://fir-app-1039b.appspot.com/workouts.txt");
+        File rootPath = new File(getFilesDir(), "");
+        if(!rootPath.exists()) {
+            rootPath.mkdirs();
         }
-        else {
-            workoutArray = new JSONArray(current_user_data);
-            for (int l = 0; l < workoutArray.length(); l++) {
-                try {
-                    if (workoutArray.getJSONObject(l).getString("userid").equals(current_user_id)) {
-                        System.out.println("Test");
-                        workoutObject = workoutArray.getJSONObject(l);
-                        exerciseArray = workoutObject.getJSONArray("exercises");
-                        exerciseObject.put("id", exercise_id);
-                        exerciseObject.put("reps", 1);
-                        exerciseObject.put("sets", 1);
-                        exerciseArray.put(exerciseObject);
-                        workoutObject.put("exercises", exerciseArray);
-                        writeToFile(workoutArray.toString(), context);
-                        return;
+        final File localFile = new File(rootPath,"workouts.txt");
+
+        gsReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                String current_user_id = mAuth.getUid();
+                Context context = getApplicationContext();
+                String current_user_data = "";
+                current_user_data = readFromFile(context);
+                System.out.println(current_user_data);
+
+                JSONObject workoutObject = new JSONObject();
+                JSONObject exerciseObject= new JSONObject();
+                JSONArray exerciseArray= new JSONArray();
+                JSONArray workoutArray = null;
+
+                if (current_user_data.equals("")) {
+                    workoutArray = new JSONArray();
+                }
+                else {
+                    try {
+                        workoutArray = new JSONArray(current_user_data);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+                    for (int l = 0; l < workoutArray.length(); l++) {
+                        try {
+                            if (workoutArray.getJSONObject(l).getString("userid").equals(current_user_id)) {
+                                workoutObject = workoutArray.getJSONObject(l);
+                                exerciseArray = workoutObject.getJSONArray("exercises");
+                                exerciseObject.put("id", exercise_id);
+                                exerciseObject.put("reps", 1);
+                                exerciseObject.put("sets", 1);
+                                exerciseArray.put(exerciseObject);
+                                workoutObject.put("exercises", exerciseArray);
+                                writeToFile(workoutArray.toString(), context);
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                try {
+                    exerciseObject.put("id", exercise_id);
+                    exerciseObject.put("reps", 1);
+                    exerciseObject.put("sets", 1);
+                    exerciseArray.put(exerciseObject);
+                    workoutObject.put("userid", current_user_id);
+                    workoutObject.put("dayofweek", "Sunday");
+                    workoutObject.put("exercises", exerciseArray);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                workoutArray.put(workoutObject);
+
+                System.out.println(workoutArray.toString());
+
+                writeToFile(workoutArray.toString(), context);
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                System.out.println("firebase;local tem file not created  created " +exception.toString());
+            }
+        });
 
-        }
-
-        exerciseObject.put("id", exercise_id);
-        exerciseObject.put("reps", 1);
-        exerciseObject.put("sets", 1);
-        exerciseArray.put(exerciseObject);
-        workoutObject.put("userid", current_user_id);
-        workoutObject.put("dayofweek", "Sunday");
-        workoutObject.put("exercises", exerciseArray);
-
-        workoutArray.put(workoutObject);
-
-        System.out.println(workoutArray.toString());
-
-        writeToFile(workoutArray.toString(), context);
+        sleep(1000);
+        Uri file = Uri.fromFile(new File(getApplicationContext().getFilesDir() + "/workouts.txt"));
+        gsReference = storage.getReferenceFromUrl("gs://fir-app-1039b.appspot.com/workouts.txt");
+        Task up_tsk = gsReference.putFile(file);
+        up_tsk.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                taskSnapshot.getMetadata();
+                System.out.println("firebase;local tem file created ");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                System.out.println("firebase;local tem file not created  created " +exception.toString());
+            }
+        });
     }
 
     private String readData(String qr_result) throws IOException {
