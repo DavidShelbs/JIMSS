@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-public class QuickScanActivity extends AppCompatActivity {
+public class ScanActivity extends AppCompatActivity {
 
     private TextView exerciseTitle;
     private TextView exerciseArea;
@@ -33,11 +33,10 @@ public class QuickScanActivity extends AppCompatActivity {
     private ImageView exerciseImage;
     private Handler handler;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quickscan);
+        setContentView(R.layout.activity_scan);
         View v = getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
         String qr_result = getIntent().getStringExtra("QR_RESULT");

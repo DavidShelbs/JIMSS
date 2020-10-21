@@ -38,6 +38,7 @@ public class SignInActivity extends AppCompatActivity {
                 createSignInIntent();
             }
         });
+        this.getSupportActionBar().hide();
     }
 
     public void createSignInIntent() {

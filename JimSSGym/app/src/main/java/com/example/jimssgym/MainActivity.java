@@ -8,7 +8,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         quick_scan_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, QRReaderActivity.class));
+                startActivity(new Intent(MainActivity.this, QRReaderQuickScanActivity.class));
             }
         });
         your_page_button.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         workout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(MainActivity.this, QRReaderActivity.class));
             }
         });
         friends_button.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            setTitle("Hello, " + currentUser.getDisplayName());
+            setTitle("Hello, " + currentUser.getDisplayName() + "!");
         }
         else {
             Intent intent = new Intent(MainActivity.this, SignInActivity.class);

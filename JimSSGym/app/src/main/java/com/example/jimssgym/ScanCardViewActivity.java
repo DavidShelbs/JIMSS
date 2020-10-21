@@ -19,15 +19,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class QuickScanCardViewActivity extends AppCompatActivity {
+public class ScanCardViewActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    QuickScanCardViewAdapter adapter;
+    ScanCardViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quickscan_cardview);
+        setContentView(R.layout.activity_scan_cardview);
         String qr_result = getIntent().getStringExtra("QR_RESULT");
 
         //back button
@@ -37,7 +37,7 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         try {
-            adapter = new QuickScanCardViewAdapter(this, getMyList(qr_result));
+            adapter = new ScanCardViewAdapter(this, getMyList(qr_result));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,9 +47,9 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<QuickScanCardViewModel> getMyList(String qr_result) throws IOException {
+    private ArrayList<ScanCardViewModel> getMyList(String qr_result) throws IOException {
 
-        ArrayList<QuickScanCardViewModel> models = new ArrayList<>();
+        ArrayList<ScanCardViewModel> models = new ArrayList<>();
 
         InputStream machines_json = getResources().openRawResource(R.raw.equipment);
         BufferedReader machines_reader = new BufferedReader(new InputStreamReader(machines_json, Charset.forName("UTF-8")));
@@ -71,7 +71,7 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
                                     JSONArray exercisesArray = new JSONArray(exercises_lines);
                                     for (int j = 0; j < exercisesArray.length(); j++) {
                                         try {
-                                            QuickScanCardViewModel m = new QuickScanCardViewModel();
+                                            ScanCardViewModel m = new ScanCardViewModel();
                                             JSONObject exerciseObject = exercisesArray.getJSONObject(j);
                                             String equipment_string = exerciseObject.getString("equipment");
                                             String exercise_name = exerciseObject.getString("name");

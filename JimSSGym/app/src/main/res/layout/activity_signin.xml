@@ -4,18 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ORIENT"
     tools:context=".SignInActivity">
 
     <Button
         android:id="@+id/signInButton"
-        android:layout_width="153dp"
-        android:layout_height="37dp"
+        android:layout_width="214dp"
+        android:layout_height="89dp"
         android:layout_marginStart="162dp"
         android:layout_marginEnd="162dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="80dp"
+        android:backgroundTint="@color/CANDLELIGHT"
         android:text="Sign In"
+        android:textSize="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="388dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="177dp"
+        android:gravity="center_horizontal"
+        android:text="JIM'SS Gym"
+        android:textColor="@color/CANDLELIGHT"
+        android:textSize="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
