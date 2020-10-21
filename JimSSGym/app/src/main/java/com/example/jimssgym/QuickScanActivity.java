@@ -1,28 +1,36 @@
 package com.example.jimssgym;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
 public class QuickScanActivity extends AppCompatActivity {
@@ -32,6 +40,8 @@ public class QuickScanActivity extends AppCompatActivity {
     public TextView exerciseDescription;
     private ImageView exerciseImage;
     private Handler handler;
+    private Button workout_button;
+    private String exercise_id;
 
 
     @Override
@@ -42,24 +52,31 @@ public class QuickScanActivity extends AppCompatActivity {
         v.setBackgroundResource(android.R.color.transparent);
         String qr_result = getIntent().getStringExtra("QR_RESULT");
         exerciseImage = findViewById(R.id.imageView);
-
+        workout_button = findViewById(R.id.add_workout_button);
         exerciseTitle = findViewById(R.id.exerciseTitle);
         exerciseTitle.setText(qr_result.toUpperCase());
 
         try {
-            readData(qr_result);
+            exercise_id = readData(qr_result);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        workout_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    add_workout(exercise_id);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(), R.drawable.earth);
         int height = bitmapOrg.getHeight();
         int width = bitmapOrg.getWidth();
-//        GifImageView gifView = findViewById(R.id.gifView);
-//        ViewGroup.LayoutParams params = gifView.getLayoutParams();
-//        params.height = height;
-//        params.width = width;
-//        gifView.setLayoutParams(params);
+
         Window window = this.getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
         window.setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
@@ -76,15 +93,84 @@ public class QuickScanActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    private void readData(String qr_result) throws IOException {
-//        InputStream is_csv = getResources().openRawResource(R.raw.exercises_csv);
-//        BufferedReader reader_csv = new BufferedReader(new InputStreamReader(is_csv, Charset.forName("UTF-8")));
-//        String line_csv = "";
+    private String readFromFile(Context context) {
+        String ret = "";
+        try {
+            InputStream inputStream = context.openFileInput("workout.txt");
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append("\n").append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+        return ret;
+    }
+
+    private void writeToFile(String data, Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("workout.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    private void add_workout(String exercise_id) throws JSONException {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String current_user_id = mAuth.getUid();
+        Context context = getApplicationContext();
+        String current_user_data = "";
+        current_user_data = readFromFile(context);
+        System.out.println(current_user_data);
+
+        JSONObject workoutObject = new JSONObject();
+        JSONObject exerciseObject= new JSONObject();
+        JSONArray exerciseArray= new JSONArray();
+        JSONArray workoutArray;
+
+        if (current_user_data.equals("")) {
+            workoutArray = new JSONArray();
+        }
+        else {
+            workoutArray = new JSONArray(current_user_data);
+        }
+
+        exerciseObject.put("id", exercise_id);
+        exerciseObject.put("reps", 1);
+        exerciseObject.put("sets", 1);
+
+        exerciseArray.put(exerciseObject);
+
+        workoutObject.put("userid", current_user_id);
+        workoutObject.put("dayofweek", "Sunday");
+        workoutObject.put("exercises", exerciseArray);
+
+        workoutArray.put(workoutObject);
+
+        writeToFile(workoutArray.toString(), context);
+    }
+
+    private String readData(String qr_result) throws IOException {
         exerciseArea = findViewById(R.id.exerciseArea);
         exerciseDescription = findViewById(R.id.exerciseDescription);
         exerciseImage = findViewById(R.id.imageView);
         AnimationDrawable animation;
-
+        String exercise_id = null;
 
         InputStream exercises_json = getResources().openRawResource(R.raw.exercises);
         BufferedReader exercises_reader = new BufferedReader(new InputStreamReader(exercises_json, Charset.forName("UTF-8")));
@@ -95,7 +181,7 @@ public class QuickScanActivity extends AppCompatActivity {
                 for (int j = 0; j < exercisesArray.length(); j++) {
                     try {
                         JSONObject exerciseObject = exercisesArray.getJSONObject(j);
-                        String exercise_id = exerciseObject.getString("id");
+                        exercise_id = exerciseObject.getString("id");
                         String exercise_name = exerciseObject.getString("name");
                         exerciseDescription.setText(exerciseObject.getString("description").replaceAll("<[^>]*>", ""));
                         if (exercise_name.toLowerCase().equals(qr_result.toLowerCase())) {
@@ -207,113 +293,9 @@ public class QuickScanActivity extends AppCompatActivity {
                     }
                 }
             }
-
-
-//        try {
-//            while ((line_csv = reader_csv.readLine()) != null) {
-//                String[] tokens = line_csv.split(",");
-//                if (tokens[0].toLowerCase().contains(qr_result.toLowerCase())) {
-//                    exerciseArea.setText(tokens[1]);
-//                }
-//                Log.d("QuickScanActivity" ,"Just Created " + tokens);
-//            }
-//        } catch (IOException e1) {
-//            exerciseArea.setText("error");
-//            Log.e("QuickScanActivity", "Error" + line_csv, e1);
-//            e1.printStackTrace();
-//        }
-//        String[] urls = new String[]{"https://wger.de/api/v2/exercise/?format=json&language=2&status=2&limit=199&name=bench"};
-//        new GetUrlContentTask(this).execute(urls);
-
-
-//        InputStream is_json = getResources().openRawResource(R.raw.exercises_json);
-//        BufferedReader reader_json = new BufferedReader(new InputStreamReader(is_json, Charset.forName("UTF-8")));
-//        String lines_json = "";
-//        try {
-//            while ((lines_json = reader_json.readLine()) != null) {
-//                JSONArray jsonArray = new JSONArray(lines_json);
-//                for (int i=0; i < jsonArray.length(); i++)
-//                {
-//                    try {
-//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                        String item = jsonObject.getString("name");
-//                        if (item.equals(qr_result)) {
-//                            String muscle_string = jsonObject.getString("muscles");
-//                            muscle_string = muscle_string.substring(1, muscle_string.length() - 1);
-//                            exerciseDescription.setText(jsonObject.getString("description").replaceAll("<[^>]*>", ""));
-//                            String muscles[] = muscle_string.split(",");
-//                            muscle_string = "";
-//                            for (int j=0; j < muscles.length; j++) {
-//                                if (!muscle_string.equals("")) {
-//                                    muscle_string += ", ";
-//                                }
-//                                switch (muscles[j])
-//                                {
-//                                    case "1":
-//                                        muscle_string += "Biceps brachii";
-//                                        break;
-//                                    case "2":
-//                                        muscle_string += "Anterior deltoid";
-//                                        break;
-//                                    case "3":
-//                                        muscle_string += "Serratus anterior";
-//                                        break;
-//                                    case "4":
-//                                        muscle_string += "Pectoralis major";
-//                                        break;
-//                                    case "5":
-//                                        muscle_string += "Triceps brachii";
-//                                        break;
-//                                    case "6":
-//                                        muscle_string += "Rectus abdominis";
-//                                        break;
-//                                    case "7":
-//                                        muscle_string += "Gastrocnemius";
-//                                        break;
-//                                    case "8":
-//                                        muscle_string += "Gluteus maximus";
-//                                        break;
-//                                    case "9":
-//                                        muscle_string += "Trapezius";
-//                                        break;
-//                                    case "10":
-//                                        muscle_string += "Quadriceps femoris";
-//                                        break;
-//                                    case "11":
-//                                        muscle_string += "Biceps femoris";
-//                                        break;
-//                                    case "12":
-//                                        muscle_string += "Latissimus dorsi";
-//                                        break;
-//                                    case "13":
-//                                        muscle_string += "Brachialis";
-//                                        break;
-//                                    case "14":
-//                                        muscle_string += "Obliquus externus abdominis";
-//                                        break;
-//                                    case "15":
-//                                        muscle_string += "Soleus";
-//                                        break;
-//                                }
-//                            }
-//                            exerciseArea.setText(muscle_string);
-//                            break;
-//                        }
-//                        else {
-//                            exerciseArea.setText("Error");
-//                            exerciseDescription.setText("Equipment Not Recognised");
-//                        }
-//                    } catch (JSONException e) {
-//                        // Oops
-//                    }
-//                }
-//
-//            }
-//        } catch (IOException | JSONException e) {
-//            e.printStackTrace();
-//        }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return exercise_id;
     }
 }

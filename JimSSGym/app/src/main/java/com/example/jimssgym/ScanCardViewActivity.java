@@ -1,16 +1,22 @@
 package com.example.jimssgym;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,7 +44,7 @@ public class ScanCardViewActivity extends AppCompatActivity {
 
         try {
             adapter = new ScanCardViewAdapter(this, getMyList(qr_result));
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         recyclerView.setAdapter(adapter);
@@ -47,9 +53,74 @@ public class ScanCardViewActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<ScanCardViewModel> getMyList(String qr_result) throws IOException {
+    private String readFromFile(Context context) {
+        String ret = "";
+        try {
+            InputStream inputStream = context.openFileInput("workout.txt");
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append("\n").append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+        return ret;
+    }
+
+    private ArrayList<ScanCardViewModel> getMyList(String qr_result) throws IOException, JSONException {
 
         ArrayList<ScanCardViewModel> models = new ArrayList<>();
+        ArrayList<String> exercise_array = new ArrayList<>();
+
+        Context context = getApplicationContext();
+//        InputStream workouts_json = getResources().openRawResource(R.raw.workouts);
+//        BufferedReader workouts_reader = new BufferedReader(new InputStreamReader(workouts_json, Charset.forName("UTF-8")));
+//        String workouts_lines = "";
+//        try {
+//            while ((workouts_lines = workouts_reader.readLine()) != null) {
+        String current_user_data = readFromFile(context);
+        JSONArray workoutArray = new JSONArray(current_user_data);
+        System.out.println(workoutArray.length());
+        for (int l = 0; l < workoutArray.length(); l++) {
+            try {
+                System.out.println(l);
+                JSONObject workoutObject = workoutArray.getJSONObject(l);
+                String user_id = workoutObject.getString("userid");
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                String current_user_id = mAuth.getUid();
+                if (current_user_id.equals(user_id)) {
+                    JSONArray user_workoutArray = workoutObject.getJSONArray("exercises");
+                    for (int m = 0; m < user_workoutArray.length(); m++) {
+                        try {
+                            JSONObject user_workoutObject = user_workoutArray.getJSONObject(m);
+                            exercise_array.add(user_workoutObject.getString("id"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         InputStream machines_json = getResources().openRawResource(R.raw.equipment);
         BufferedReader machines_reader = new BufferedReader(new InputStreamReader(machines_json, Charset.forName("UTF-8")));
@@ -77,38 +148,33 @@ public class ScanCardViewActivity extends AppCompatActivity {
                                             String exercise_name = exerciseObject.getString("name");
                                             String exercise_id = exerciseObject.getString("id");
 
-                                            InputStream images_json = getResources().openRawResource(R.raw.images);
-                                            BufferedReader images_reader = new BufferedReader(new InputStreamReader(images_json, Charset.forName("UTF-8")));
-                                            String images_lines = "";
-                                            try {
-                                                while ((images_lines = images_reader.readLine()) != null) {
-                                                    JSONArray imagesArray = new JSONArray(images_lines);
-                                                    for (int l = 0; l < imagesArray.length(); l++) {
-                                                        try {
-                                                            JSONObject imagesObject = imagesArray.getJSONObject(l);
-                                                            String images_exercise = imagesObject.getString("exercise");
-                                                            if (images_exercise.toLowerCase().equals(exercise_id.toLowerCase())) {
-                                                                String image_id = imagesObject.getString("id");
-                                                                String image_name = "exercise_image_" + image_id;
-                                                                int id = getApplicationContext().getResources().getIdentifier(image_name, "drawable", getApplicationContext().getPackageName());
-//                                                                new GetUrlContentTask().execute(imagesObject.getString("image"), m);
-                                                                m.setImg(id);
-                                                                break;
-                                                            }
-                                                            else {
-                                                                int id = getApplicationContext().getResources().getIdentifier("no_image_available", "drawable", getApplicationContext().getPackageName());
-                                                                m.setImg(id);
-                                                            }
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                }
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
+//                                            InputStream images_json = getResources().openRawResource(R.raw.images);
+//                                            BufferedReader images_reader = new BufferedReader(new InputStreamReader(images_json, Charset.forName("UTF-8")));
+//                                            String images_lines = "";
+//                                            try {
+//                                                while ((images_lines = images_reader.readLine()) != null) {
+//                                                    JSONArray imagesArray = new JSONArray(images_lines);
+//                                                    for (int l = 0; l < imagesArray.length(); l++) {
+//                                                        try {
+//                                                            JSONObject imagesObject = imagesArray.getJSONObject(l);
+//                                                            String images_exercise = imagesObject.getString("exercise");
+//                                                            if (images_exercise.toLowerCase().equals(exercise_id.toLowerCase())) {
+//                                                                String image_id = imagesObject.getString("id");
+//                                                                String image_name = "exercise_image_" + image_id;
+//                                                                int id = getApplicationContext().getResources().getIdentifier(image_name, "drawable", getApplicationContext().getPackageName());
+//                                                                m.setImg(id);
+//                                                                break;
+//                                                            }
+//                                                        } catch (JSONException e) {
+//                                                            e.printStackTrace();
+//                                                        }
+//                                                    }
+//                                                }
+//                                            } catch (IOException e) {
+//                                                e.printStackTrace();
+//                                            } catch (JSONException e) {
+//                                                e.printStackTrace();
+//                                            }
 
                                             String muscle_string = exerciseObject.getString("muscles");
                                             muscle_string = muscle_string.substring(1, muscle_string.length() - 1);
@@ -170,11 +236,12 @@ public class ScanCardViewActivity extends AppCompatActivity {
                                             equipment_string = equipment_string.substring(1, equipment_string.length() - 1);
                                             String equipment_array[] = equipment_string.split(",");
                                             List<String> equipment = Arrays.asList(equipment_array);
-                                            if (equipment.contains(equipment_id)) {
+                                            if (equipment.contains(equipment_id) && exercise_array.contains(exercise_id)) {
                                                 m.setTitle(exercise_name);
                                                 m.setDescription(muscle_string);
                                                 models.add(m);
                                             }
+
                                         } catch (JSONException ex) {
                                             ex.printStackTrace();
                                         }
