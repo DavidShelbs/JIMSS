@@ -85,17 +85,12 @@ public class ScanCardViewActivity extends AppCompatActivity {
         ArrayList<String> exercise_array = new ArrayList<>();
 
         Context context = getApplicationContext();
-//        InputStream workouts_json = getResources().openRawResource(R.raw.workouts);
-//        BufferedReader workouts_reader = new BufferedReader(new InputStreamReader(workouts_json, Charset.forName("UTF-8")));
-//        String workouts_lines = "";
-//        try {
-//            while ((workouts_lines = workouts_reader.readLine()) != null) {
+
         String current_user_data = readFromFile(context);
         JSONArray workoutArray = new JSONArray(current_user_data);
-        System.out.println(workoutArray.length());
+        System.out.println(current_user_data);
         for (int l = 0; l < workoutArray.length(); l++) {
             try {
-                System.out.println(l);
                 JSONObject workoutObject = workoutArray.getJSONObject(l);
                 String user_id = workoutObject.getString("userid");
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -115,12 +110,6 @@ public class ScanCardViewActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
         InputStream machines_json = getResources().openRawResource(R.raw.equipment);
         BufferedReader machines_reader = new BufferedReader(new InputStreamReader(machines_json, Charset.forName("UTF-8")));

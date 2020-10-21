@@ -136,7 +136,6 @@ public class QuickScanActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         String current_user_data = "";
         current_user_data = readFromFile(context);
-        System.out.println(current_user_data);
 
         JSONObject workoutObject = new JSONObject();
         JSONObject exerciseObject= new JSONObject();
@@ -148,19 +147,38 @@ public class QuickScanActivity extends AppCompatActivity {
         }
         else {
             workoutArray = new JSONArray(current_user_data);
+            for (int l = 0; l < workoutArray.length(); l++) {
+                try {
+                    if (workoutArray.getJSONObject(l).getString("userid").equals(current_user_id)) {
+                        System.out.println("Test");
+                        workoutObject = workoutArray.getJSONObject(l);
+                        exerciseArray = workoutObject.getJSONArray("exercises");
+                        exerciseObject.put("id", exercise_id);
+                        exerciseObject.put("reps", 1);
+                        exerciseObject.put("sets", 1);
+                        exerciseArray.put(exerciseObject);
+                        workoutObject.put("exercises", exerciseArray);
+                        writeToFile(workoutArray.toString(), context);
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
 
         exerciseObject.put("id", exercise_id);
         exerciseObject.put("reps", 1);
         exerciseObject.put("sets", 1);
-
         exerciseArray.put(exerciseObject);
-
         workoutObject.put("userid", current_user_id);
         workoutObject.put("dayofweek", "Sunday");
         workoutObject.put("exercises", exerciseArray);
 
         workoutArray.put(workoutObject);
+
+        System.out.println(workoutArray.toString());
 
         writeToFile(workoutArray.toString(), context);
     }
