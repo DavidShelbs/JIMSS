@@ -28,7 +28,7 @@ public class PopUpWorkoutActivity extends Activity {
         getWindow().setLayout((int)(width*.8), (int)(height*.6));
 
         workout = findViewById(R.id.pop);
-        workout.setText("SHIT\nBITCH");
+        workout.setText("\nSHIT\nBITCH");
 
 
 
