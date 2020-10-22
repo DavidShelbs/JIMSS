@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/workoutPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CEB888  "
+        android:orientation="vertical"
+        tools:ignore="ExtraText">
+
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/what_would_you_like_to_work_on_today"
+            android:textColor="#0C0000"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <CheckBox
+            android:id="@+id/chestBox"
+            android:layout_width="217dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="166dp"
+            android:layout_marginLeft="166dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:scaleX="2.5"
+            android:scaleY="2.5"
+            android:text="@string/chest"
+            android:textColorHighlight="#154734"
+            android:textColorLink="#154734"
+            app:buttonTint="#154734"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/shoulderBox"
+            android:layout_width="217dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="166dp"
+            android:layout_marginLeft="166dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:scaleX="2.5"
+            android:scaleY="2.5"
+            android:text="@string/shoulders"
+            app:buttonTint="#154734"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/backBox"
+            android:layout_width="217dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="166dp"
+            android:layout_marginLeft="166dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:scaleX="2.5"
+            android:scaleY="2.5"
+            android:text="@string/back"
+            app:buttonTint="#154734"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shoulderBox"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/armsBox"
+            android:layout_width="217dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="166dp"
+            android:layout_marginLeft="166dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:scaleX="2.5"
+            android:scaleY="2.5"
+            android:text="@string/arms"
+            app:buttonTint="#154734"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backBox"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/legsBox"
+            android:layout_width="217dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="166dp"
+            android:layout_marginLeft="166dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:scaleX="2.5"
+            android:scaleY="2.5"
+            android:text="@string/legs"
+            app:buttonTint="#154734"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/armsBox"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/cardioBox"
+            android:layout_width="217dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="166dp"
+            android:layout_marginLeft="166dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            android:scaleX="2.5"
+            android:scaleY="2.5"
+            android:text="@string/cardio"
+            app:buttonTint="#154734"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/legsBox"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/workout"
+            android:layout_width="match_parent"
+            android:layout_height="111dp"
+            android:text="@string/workout_time"
+            app:backgroundTint="#154734" />
+
+        "
+    </LinearLayout>
+</ScrollView>

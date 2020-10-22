@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">WorkoutBodySelection</string>
+    <string name="chest">Chest</string>
+    <string name="shoulders">Shoulders</string>
+    <string name="back">Back</string>
+    <string name="arms">Arms</string>
+    <string name="legs">Legs</string>
+    <string name="cardio">Cardio</string>
+    <string name="let_s_workout">Let\'s Workout!</string>
+    <string name="workout_time">WORKOUT TIME!</string>
+    <string name="what_would_you_like_to_work_on_today">What would you like to work on today?</string>
+</resources>
