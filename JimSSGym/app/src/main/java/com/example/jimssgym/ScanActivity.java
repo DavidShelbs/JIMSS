@@ -29,8 +29,6 @@ public class ScanActivity extends AppCompatActivity {
 
     private TextView exerciseTitle;
     private TextView exerciseArea;
-    public TextView exerciseDescription;
-    private ImageView exerciseImage;
     private Handler handler;
 
     @Override
@@ -40,7 +38,6 @@ public class ScanActivity extends AppCompatActivity {
         View v = getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
         String qr_result = getIntent().getStringExtra("QR_RESULT");
-        exerciseImage = findViewById(R.id.imageView);
 
         exerciseTitle = findViewById(R.id.exerciseTitle);
         exerciseTitle.setText(qr_result.toUpperCase());
@@ -54,11 +51,6 @@ public class ScanActivity extends AppCompatActivity {
         Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(), R.drawable.earth);
         int height = bitmapOrg.getHeight();
         int width = bitmapOrg.getWidth();
-//        GifImageView gifView = findViewById(R.id.gifView);
-//        ViewGroup.LayoutParams params = gifView.getLayoutParams();
-//        params.height = height;
-//        params.width = width;
-//        gifView.setLayoutParams(params);
         Window window = this.getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
         window.setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
@@ -80,8 +72,6 @@ public class ScanActivity extends AppCompatActivity {
 //        BufferedReader reader_csv = new BufferedReader(new InputStreamReader(is_csv, Charset.forName("UTF-8")));
 //        String line_csv = "";
         exerciseArea = findViewById(R.id.exerciseArea);
-        exerciseDescription = findViewById(R.id.exerciseDescription);
-        exerciseImage = findViewById(R.id.imageView);
         AnimationDrawable animation;
 
 
@@ -96,7 +86,6 @@ public class ScanActivity extends AppCompatActivity {
                         JSONObject exerciseObject = exercisesArray.getJSONObject(j);
                         String exercise_id = exerciseObject.getString("id");
                         String exercise_name = exerciseObject.getString("name");
-                        exerciseDescription.setText(exerciseObject.getString("description").replaceAll("<[^>]*>", ""));
                         if (exercise_name.toLowerCase().equals(qr_result.toLowerCase())) {
                             InputStream images_json = getResources().openRawResource(R.raw.images);
                             BufferedReader images_reader = new BufferedReader(new InputStreamReader(images_json, Charset.forName("UTF-8")));
@@ -116,20 +105,17 @@ public class ScanActivity extends AppCompatActivity {
                                                 image_id = nextObject.getString("id");
                                                 image_name = "exercise_image_" + image_id;
                                                 int id2 = getApplicationContext().getResources().getIdentifier(image_name, "drawable", getApplicationContext().getPackageName());
-                                                exerciseImage.setImageResource(id);
 
                                                 animation = new AnimationDrawable();
                                                 animation.addFrame(getResources().getDrawable(id), 500);
                                                 animation.addFrame(getResources().getDrawable(id2), 500);
                                                 animation.setOneShot(false);
-                                                exerciseImage.setImageDrawable(animation);
                                                 animation.start();
 
 
                                                 break;
                                             } else {
                                                 int id = getApplicationContext().getResources().getIdentifier("no_image_available", "drawable", getApplicationContext().getPackageName());
-                                                exerciseImage.setImageResource(id);
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
