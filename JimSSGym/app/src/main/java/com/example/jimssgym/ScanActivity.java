@@ -1,100 +1,64 @@
 package com.example.jimssgym;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
-import static java.lang.Thread.sleep;
-
-public class QuickScanActivity extends AppCompatActivity {
+public class ScanActivity extends AppCompatActivity {
 
     private TextView exerciseTitle;
     private TextView exerciseArea;
     public TextView exerciseDescription;
     private ImageView exerciseImage;
     private Handler handler;
-    private Button workout_button;
-    private String exercise_id;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quickscan);
-        isStoragePermissionGranted();
+        setContentView(R.layout.activity_scan);
         View v = getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
         String qr_result = getIntent().getStringExtra("QR_RESULT");
         exerciseImage = findViewById(R.id.imageView);
-        workout_button = findViewById(R.id.add_workout_button);
+
         exerciseTitle = findViewById(R.id.exerciseTitle);
         exerciseTitle.setText(qr_result.toUpperCase());
 
         try {
-            exercise_id = readData(qr_result);
+            readData(qr_result);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        workout_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    add_workout(exercise_id);
-                } catch (JSONException | IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
         Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(), R.drawable.earth);
         int height = bitmapOrg.getHeight();
         int width = bitmapOrg.getWidth();
-
+//        GifImageView gifView = findViewById(R.id.gifView);
+//        ViewGroup.LayoutParams params = gifView.getLayoutParams();
+//        params.height = height;
+//        params.width = width;
+//        gifView.setLayoutParams(params);
         Window window = this.getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
         window.setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
@@ -111,155 +75,15 @@ public class QuickScanActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    public  boolean isStoragePermissionGranted() {
-        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            return false;
-        }
-    }
-
-    private String readFromFile(Context context) {
-        String ret = "";
-        try {
-            InputStream inputStream = context.openFileInput("workouts.txt");
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append("\n").append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        }
-        return ret;
-    }
-
-    private void writeToFile(String data, Context context) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("workouts.txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    private void add_workout(final String exercise_id) throws JSONException, IOException, InterruptedException {
-        FirebaseStorage storage = FirebaseStorage.getInstance("gs://fir-app-1039b.appspot.com/");
-        StorageReference gsReference = storage.getReferenceFromUrl("gs://fir-app-1039b.appspot.com/workouts.txt");
-        File rootPath = new File(getFilesDir(), "");
-        if(!rootPath.exists()) {
-            rootPath.mkdirs();
-        }
-        final File localFile = new File(rootPath,"workouts.txt");
-
-        gsReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                String current_user_id = mAuth.getUid();
-                Context context = getApplicationContext();
-                String current_user_data = "";
-                current_user_data = readFromFile(context);
-                System.out.println(current_user_data);
-
-                JSONObject workoutObject = new JSONObject();
-                JSONObject exerciseObject= new JSONObject();
-                JSONArray exerciseArray= new JSONArray();
-                JSONArray workoutArray = null;
-
-                if (current_user_data.equals("")) {
-                    workoutArray = new JSONArray();
-                }
-                else {
-                    try {
-                        workoutArray = new JSONArray(current_user_data);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    for (int l = 0; l < workoutArray.length(); l++) {
-                        try {
-                            if (workoutArray.getJSONObject(l).getString("userid").equals(current_user_id)) {
-                                workoutObject = workoutArray.getJSONObject(l);
-                                exerciseArray = workoutObject.getJSONArray("exercises");
-                                exerciseObject.put("id", exercise_id);
-                                exerciseObject.put("reps", 1);
-                                exerciseObject.put("sets", 1);
-                                exerciseArray.put(exerciseObject);
-                                workoutObject.put("exercises", exerciseArray);
-                                writeToFile(workoutArray.toString(), context);
-                                return;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                try {
-                    exerciseObject.put("id", exercise_id);
-                    exerciseObject.put("reps", 1);
-                    exerciseObject.put("sets", 1);
-                    exerciseArray.put(exerciseObject);
-                    workoutObject.put("userid", current_user_id);
-                    workoutObject.put("dayofweek", "Sunday");
-                    workoutObject.put("exercises", exerciseArray);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                workoutArray.put(workoutObject);
-
-                System.out.println(workoutArray.toString());
-
-                writeToFile(workoutArray.toString(), context);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                System.out.println("firebase;local tem file not created  created " +exception.toString());
-            }
-        });
-
-        sleep(1000);
-        Uri file = Uri.fromFile(new File(getApplicationContext().getFilesDir() + "/workouts.txt"));
-        gsReference = storage.getReferenceFromUrl("gs://fir-app-1039b.appspot.com/workouts.txt");
-        Task up_tsk = gsReference.putFile(file);
-        up_tsk.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                taskSnapshot.getMetadata();
-                System.out.println("firebase;local tem file created ");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                System.out.println("firebase;local tem file not created  created " +exception.toString());
-            }
-        });
-    }
-
-    private String readData(String qr_result) throws IOException {
+    private void readData(String qr_result) throws IOException {
+//        InputStream is_csv = getResources().openRawResource(R.raw.exercises_csv);
+//        BufferedReader reader_csv = new BufferedReader(new InputStreamReader(is_csv, Charset.forName("UTF-8")));
+//        String line_csv = "";
         exerciseArea = findViewById(R.id.exerciseArea);
         exerciseDescription = findViewById(R.id.exerciseDescription);
         exerciseImage = findViewById(R.id.imageView);
         AnimationDrawable animation;
-        String exercise_id = null;
+
 
         InputStream exercises_json = getResources().openRawResource(R.raw.exercises);
         BufferedReader exercises_reader = new BufferedReader(new InputStreamReader(exercises_json, Charset.forName("UTF-8")));
@@ -270,7 +94,7 @@ public class QuickScanActivity extends AppCompatActivity {
                 for (int j = 0; j < exercisesArray.length(); j++) {
                     try {
                         JSONObject exerciseObject = exercisesArray.getJSONObject(j);
-                        exercise_id = exerciseObject.getString("id");
+                        String exercise_id = exerciseObject.getString("id");
                         String exercise_name = exerciseObject.getString("name");
                         exerciseDescription.setText(exerciseObject.getString("description").replaceAll("<[^>]*>", ""));
                         if (exercise_name.toLowerCase().equals(qr_result.toLowerCase())) {
@@ -382,9 +206,113 @@ public class QuickScanActivity extends AppCompatActivity {
                     }
                 }
             }
+
+
+//        try {
+//            while ((line_csv = reader_csv.readLine()) != null) {
+//                String[] tokens = line_csv.split(",");
+//                if (tokens[0].toLowerCase().contains(qr_result.toLowerCase())) {
+//                    exerciseArea.setText(tokens[1]);
+//                }
+//                Log.d("QuickScanActivity" ,"Just Created " + tokens);
+//            }
+//        } catch (IOException e1) {
+//            exerciseArea.setText("error");
+//            Log.e("QuickScanActivity", "Error" + line_csv, e1);
+//            e1.printStackTrace();
+//        }
+//        String[] urls = new String[]{"https://wger.de/api/v2/exercise/?format=json&language=2&status=2&limit=199&name=bench"};
+//        new GetUrlContentTask(this).execute(urls);
+
+
+//        InputStream is_json = getResources().openRawResource(R.raw.exercises_json);
+//        BufferedReader reader_json = new BufferedReader(new InputStreamReader(is_json, Charset.forName("UTF-8")));
+//        String lines_json = "";
+//        try {
+//            while ((lines_json = reader_json.readLine()) != null) {
+//                JSONArray jsonArray = new JSONArray(lines_json);
+//                for (int i=0; i < jsonArray.length(); i++)
+//                {
+//                    try {
+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                        String item = jsonObject.getString("name");
+//                        if (item.equals(qr_result)) {
+//                            String muscle_string = jsonObject.getString("muscles");
+//                            muscle_string = muscle_string.substring(1, muscle_string.length() - 1);
+//                            exerciseDescription.setText(jsonObject.getString("description").replaceAll("<[^>]*>", ""));
+//                            String muscles[] = muscle_string.split(",");
+//                            muscle_string = "";
+//                            for (int j=0; j < muscles.length; j++) {
+//                                if (!muscle_string.equals("")) {
+//                                    muscle_string += ", ";
+//                                }
+//                                switch (muscles[j])
+//                                {
+//                                    case "1":
+//                                        muscle_string += "Biceps brachii";
+//                                        break;
+//                                    case "2":
+//                                        muscle_string += "Anterior deltoid";
+//                                        break;
+//                                    case "3":
+//                                        muscle_string += "Serratus anterior";
+//                                        break;
+//                                    case "4":
+//                                        muscle_string += "Pectoralis major";
+//                                        break;
+//                                    case "5":
+//                                        muscle_string += "Triceps brachii";
+//                                        break;
+//                                    case "6":
+//                                        muscle_string += "Rectus abdominis";
+//                                        break;
+//                                    case "7":
+//                                        muscle_string += "Gastrocnemius";
+//                                        break;
+//                                    case "8":
+//                                        muscle_string += "Gluteus maximus";
+//                                        break;
+//                                    case "9":
+//                                        muscle_string += "Trapezius";
+//                                        break;
+//                                    case "10":
+//                                        muscle_string += "Quadriceps femoris";
+//                                        break;
+//                                    case "11":
+//                                        muscle_string += "Biceps femoris";
+//                                        break;
+//                                    case "12":
+//                                        muscle_string += "Latissimus dorsi";
+//                                        break;
+//                                    case "13":
+//                                        muscle_string += "Brachialis";
+//                                        break;
+//                                    case "14":
+//                                        muscle_string += "Obliquus externus abdominis";
+//                                        break;
+//                                    case "15":
+//                                        muscle_string += "Soleus";
+//                                        break;
+//                                }
+//                            }
+//                            exerciseArea.setText(muscle_string);
+//                            break;
+//                        }
+//                        else {
+//                            exerciseArea.setText("Error");
+//                            exerciseDescription.setText("Equipment Not Recognised");
+//                        }
+//                    } catch (JSONException e) {
+//                        // Oops
+//                    }
+//                }
+//
+//            }
+//        } catch (IOException | JSONException e) {
+//            e.printStackTrace();
+//        }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return exercise_id;
     }
 }

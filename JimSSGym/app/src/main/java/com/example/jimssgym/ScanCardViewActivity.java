@@ -1,16 +1,29 @@
 package com.example.jimssgym;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,15 +32,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class QuickScanCardViewActivity extends AppCompatActivity {
+public class ScanCardViewActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    QuickScanCardViewAdapter adapter;
+    ScanCardViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quickscan_cardview);
+        setContentView(R.layout.activity_scan_cardview);
         String qr_result = getIntent().getStringExtra("QR_RESULT");
 
         //back button
@@ -36,20 +49,79 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://fir-app-1039b.appspot.com/");
+        StorageReference gsReference = storage.getReferenceFromUrl("gs://fir-app-1039b.appspot.com/workouts.txt");
+        File rootPath = new File(getFilesDir(), "");
+        if(!rootPath.exists()) {
+            rootPath.mkdirs();
+        }
+        final File localFile = new File(rootPath,"workouts.txt");
+
         try {
-            adapter = new QuickScanCardViewAdapter(this, getMyList(qr_result));
-        } catch (IOException e) {
+            adapter = new ScanCardViewAdapter(this, getMyList(qr_result));
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         recyclerView.setAdapter(adapter);
-
-
-
     }
 
-    private ArrayList<QuickScanCardViewModel> getMyList(String qr_result) throws IOException {
+    private String readFromFile(Context context) {
+        String ret = "";
+        try {
+            InputStream inputStream = context.openFileInput("workouts.txt");
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
 
-        ArrayList<QuickScanCardViewModel> models = new ArrayList<>();
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append("\n").append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+        return ret;
+    }
+
+    private ArrayList<ScanCardViewModel> getMyList(String qr_result) throws IOException, JSONException {
+
+        ArrayList<ScanCardViewModel> models = new ArrayList<>();
+        ArrayList<String> exercise_array = new ArrayList<>();
+
+        Context context = getApplicationContext();
+
+        String current_user_data = readFromFile(context);
+        JSONArray workoutArray = new JSONArray(current_user_data);
+        System.out.println(current_user_data);
+        for (int l = 0; l < workoutArray.length(); l++) {
+            try {
+                JSONObject workoutObject = workoutArray.getJSONObject(l);
+                String user_id = workoutObject.getString("userid");
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                String current_user_id = mAuth.getUid();
+                if (current_user_id.equals(user_id)) {
+                    JSONArray user_workoutArray = workoutObject.getJSONArray("exercises");
+                    for (int m = 0; m < user_workoutArray.length(); m++) {
+                        try {
+                            JSONObject user_workoutObject = user_workoutArray.getJSONObject(m);
+                            exercise_array.add(user_workoutObject.getString("id"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         InputStream machines_json = getResources().openRawResource(R.raw.equipment);
         BufferedReader machines_reader = new BufferedReader(new InputStreamReader(machines_json, Charset.forName("UTF-8")));
@@ -71,7 +143,7 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
                                     JSONArray exercisesArray = new JSONArray(exercises_lines);
                                     for (int j = 0; j < exercisesArray.length(); j++) {
                                         try {
-                                            QuickScanCardViewModel m = new QuickScanCardViewModel();
+                                            ScanCardViewModel m = new ScanCardViewModel();
                                             JSONObject exerciseObject = exercisesArray.getJSONObject(j);
                                             String equipment_string = exerciseObject.getString("equipment");
                                             String exercise_name = exerciseObject.getString("name");
@@ -91,13 +163,8 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
 //                                                                String image_id = imagesObject.getString("id");
 //                                                                String image_name = "exercise_image_" + image_id;
 //                                                                int id = getApplicationContext().getResources().getIdentifier(image_name, "drawable", getApplicationContext().getPackageName());
-////                                                                new GetUrlContentTask().execute(imagesObject.getString("image"), m);
 //                                                                m.setImg(id);
 //                                                                break;
-//                                                            }
-//                                                            else {
-//                                                                int id = getApplicationContext().getResources().getIdentifier("no_image_available", "drawable", getApplicationContext().getPackageName());
-//                                                                m.setImg(id);
 //                                                            }
 //                                                        } catch (JSONException e) {
 //                                                            e.printStackTrace();
@@ -170,11 +237,12 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
                                             equipment_string = equipment_string.substring(1, equipment_string.length() - 1);
                                             String equipment_array[] = equipment_string.split(",");
                                             List<String> equipment = Arrays.asList(equipment_array);
-                                            if (equipment.contains(equipment_id)) {
+                                            if (equipment.contains(equipment_id) && exercise_array.contains(exercise_id)) {
                                                 m.setTitle(exercise_name);
                                                 m.setDescription(muscle_string);
                                                 models.add(m);
                                             }
+
                                         } catch (JSONException ex) {
                                             ex.printStackTrace();
                                         }

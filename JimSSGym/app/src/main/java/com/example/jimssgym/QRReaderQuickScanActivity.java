@@ -19,7 +19,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-public class QRReaderActivity extends AppCompatActivity {
+public class QRReaderQuickScanActivity extends AppCompatActivity {
 
     CodeScanner codeScanner;
     CodeScannerView scanView;
@@ -37,7 +37,7 @@ public class QRReaderActivity extends AppCompatActivity {
         codeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
-                Intent intent = new Intent(getBaseContext(), ScanCardViewActivity.class);
+                Intent intent = new Intent(getBaseContext(), QuickScanCardViewActivity.class);
                 intent.putExtra("QR_RESULT", result.getText());
                 startActivity(intent);
             }
@@ -59,7 +59,7 @@ public class QRReaderActivity extends AppCompatActivity {
 
             @Override
             public void onPermissionDenied(PermissionDeniedResponse response) {
-                Toast.makeText(QRReaderActivity.this, "Camera Permission Required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QRReaderQuickScanActivity.this, "Camera Permission Required", Toast.LENGTH_SHORT).show();
             }
 
             @Override

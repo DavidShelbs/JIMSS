@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dialog_bg"
-    tools:context=".QuickScanActivity">
+    tools:context=".ScanActivity">
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -89,15 +89,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/exerciseDescription" />
-
-            <Button
-                android:id="@+id/add_workout_button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/CANDLELIGHT"
-                android:text="Add To Workout"
-                android:textSize="20dp" />
-
         </LinearLayout>
     </ScrollView>
 
