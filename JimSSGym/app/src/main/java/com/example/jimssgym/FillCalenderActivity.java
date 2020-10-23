@@ -158,6 +158,7 @@ public class FillCalenderActivity extends CalenderActivity {
                     event = new WeekViewEvent(event_id, getEventTitle(startTime), startTime, endTime);
                     event.setColor(getResources().getColor(R.color.event_color_02));
                     events.add(event);
+                    event.setName("Busy");
 
                     index += 9;
                     event_id++;
@@ -195,6 +196,7 @@ public class FillCalenderActivity extends CalenderActivity {
                     event = new WeekViewEvent(event_id, getEventTitle(startTime), startTime, endTime);
                     event.setColor(getResources().getColor(R.color.event_color_03));
                     events.add(event);
+                    event.setName("WOD");
 
                     index += 9;
                     event_id++;

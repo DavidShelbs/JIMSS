@@ -141,8 +141,15 @@ public abstract class CalenderActivity extends AppCompatActivity implements Week
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-//        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(CalenderActivity.this, PopUpWorkoutActivity.class));
+        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        if (event.getName().equals("WOD")){
+            startActivity(new Intent(CalenderActivity.this, PopUpWorkoutActivity.class));
+        }
+
+//        Intent intent = new Intent(CalenderActivity.this, PopUpWorkoutActivity.class);
+//        intent.putExtra("POPTYPE", event.getName());
+//        startActivity(intent);
+
     }
 
     @Override
