@@ -40,13 +40,13 @@ public class FriendsActivity extends AppCompatActivity implements AdapterView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nameList = new ArrayList<>();
-        mondayList = DataHelper.loadWorkout(this);
-        tuesdayList = DataHelper.loadWorkout(this);
-        wednesdayList = DataHelper.loadWorkout(this);
-        thursdayList = DataHelper.loadWorkout(this);
-        fridayList = DataHelper.loadWorkout(this);
-        saturdayList = DataHelper.loadWorkout(this);
-        sundayList = DataHelper.loadWorkout(this);
+        mondayList = DataHelper.loadWorkout(this, "dataFriends.json");
+        tuesdayList = DataHelper.loadWorkout(this, "dataFriends.json");
+        wednesdayList = DataHelper.loadWorkout(this, "dataFriends.json");
+        thursdayList = DataHelper.loadWorkout(this, "dataFriends.json");
+        fridayList = DataHelper.loadWorkout(this, "dataFriends.json");
+        saturdayList = DataHelper.loadWorkout(this, "dataFriends.json");
+        sundayList = DataHelper.loadWorkout(this, "dataFriends.json");
         for (int i = 0; i<mondayList.size(); i++){
             String str = mondayList.get(i).getName();
             nameList.add(str);

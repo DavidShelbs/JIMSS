@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         your_page_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(MainActivity.this, SignInActivity.class));
+
+                startActivity(new Intent(MainActivity.this, UserActivity.class));
             }
         });
         workout_button.setOnClickListener(new View.OnClickListener() {
