@@ -10,10 +10,23 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,12 +37,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ScanActivity extends AppCompatActivity {
 
     private TextView exerciseTitle;
     private TextView exerciseArea;
     private Handler handler;
+    private NumberPicker sets;
+    private NumberPicker reps;
+    private Button markAsComplete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +61,43 @@ public class ScanActivity extends AppCompatActivity {
 
         exerciseTitle = findViewById(R.id.exerciseTitle);
         exerciseTitle.setText(qr_result.toUpperCase());
+
+        markAsComplete = findViewById(R.id.mark_as_complete);
+        markAsComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                final String current_user_id = mAuth.getUid();
+                LocalDate date = LocalDate.now();
+                Map<String, Object> user_workout = new HashMap<>();
+                user_workout.put("reps", reps.getValue());
+                user_workout.put("sets", sets.getValue());
+
+                db.collection("users").document(current_user_id + "/history/" + date.toString().toLowerCase() + "/exercises/" + exerciseTitle.getText())
+                        .set(user_workout)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                System.out.println("DocumentSnapshot added with ID: " + current_user_id);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("Error adding document" + e);
+                            }
+                        });
+            }
+        });
+
+        sets = findViewById(R.id.sets);
+        reps = findViewById(R.id.reps);
+
+        sets.setMinValue(1);
+        sets.setMaxValue(99);
+        reps.setMinValue(1);
+        reps.setMaxValue(99);
 
         try {
             readData(qr_result);
@@ -71,6 +128,32 @@ public class ScanActivity extends AppCompatActivity {
 //        InputStream is_csv = getResources().openRawResource(R.raw.exercises_csv);
 //        BufferedReader reader_csv = new BufferedReader(new InputStreamReader(is_csv, Charset.forName("UTF-8")));
 //        String line_csv = "";
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        final String current_user_id = mAuth.getUid();
+        LocalDate date = LocalDate.now();
+        DayOfWeek dow = date.getDayOfWeek();
+
+        CollectionReference collectionReference = db.collection("users/" + current_user_id + "/workouts/" + dow.toString().toLowerCase() + "/exercises");
+        collectionReference.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                System.out.println(document.getId() + " => " + document.getData());
+                                if (exerciseTitle.getText().toString().toUpperCase().equals(document.getId().toUpperCase())) {
+                                    reps.setValue(((Long) document.getData().get("reps")).intValue());
+                                    sets.setValue(((Long) document.getData().get("sets")).intValue());
+                                }
+                            }
+                        }
+                        else {
+                            System.out.println("Error getting documents: " + task.getException());
+                        }
+                    }
+                });
+
         exerciseArea = findViewById(R.id.exerciseArea);
         AnimationDrawable animation;
 

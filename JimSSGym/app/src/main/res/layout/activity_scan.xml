@@ -96,6 +96,14 @@
                     app:layout_constraintTop_toTopOf="parent"></NumberPicker>
             </LinearLayout>
 
+            <Button
+                android:id="@+id/mark_as_complete"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/CANDLELIGHT"
+                android:text="Mark As Complete"
+                android:textSize="14dp" />
+
         </LinearLayout>
     </ScrollView>
 
