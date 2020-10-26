@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.loader.content.AsyncTaskLoader;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -22,8 +23,7 @@ import java.net.URL;
 
 public class DoingTheWorkout extends AppCompatActivity {
 
-    TextView textView;
-    URL exerLink = new URL("http://10.0.3.2:9000/exercises/");
+    Button backButton;
 
     public DoingTheWorkout() throws MalformedURLException {
     }
@@ -33,6 +33,13 @@ public class DoingTheWorkout extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doing_the_workout);
+        backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 }

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public static Boolean legsChecked = false;
     public static Boolean cardioChecked = false;
 
-    Boolean buttonProceed = false;
+    public static Boolean buttonProceed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,8 @@ public class MainActivity extends AppCompatActivity {
         workoutSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!chest.isChecked() && !shoulder.isChecked() && !back.isChecked() && !arms.isChecked() && !legs.isChecked() && !cardio.isChecked())
-                    workoutSubmit.setError("Must choose body group");
-
+                if(!checkBoxValidate())
+                    return;
 
                 if (chest.isChecked())
                     chestChecked = true;
@@ -56,9 +55,10 @@ public class MainActivity extends AppCompatActivity {
                     legsChecked = true;
                 if (cardio.isChecked())
                     cardioChecked = true;
+                startActivity(intent);
 
 //                openNewActivity();
-                startActivity(intent);
+//                startActivity(intent);
 
 
                 Log.i("chest Info", String.valueOf(chestChecked));
@@ -68,6 +68,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("legs Info", String.valueOf(legsChecked));
             }
         });
+    }
+    private boolean checkBoxValidate() {
+        if (!chest.isChecked() && !shoulder.isChecked() && !back.isChecked() && !arms.isChecked() && !legs.isChecked() && !cardio.isChecked()) {
+            workoutSubmit.setError("Must choose body group");
+            return false;
+        }
+        else
+        {
+            workoutSubmit.setError(null);
+            return true;
+        }
     }
 }
 
