@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkoutBodySelection">
+        <activity
+            android:name=".DoingTheWorkout"
+            android:label="@string/title_activity_doing_the_workout"
+            android:theme="@style/Theme.WorkoutBodySelection.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

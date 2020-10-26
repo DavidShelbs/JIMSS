@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CEB888  ">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        tools:context=".DoingTheWorkout">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/eCheckBox9"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="520dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox13"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="772dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox17"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="1040dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox22"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="1080dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox14"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="828dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox15"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="884dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox16"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="940dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox11"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="628dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox12"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="680dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox10"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="576dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox5"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="292dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox6"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="348dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox8"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="452dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox7"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="400dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="445dp"
+                android:layout_height="19dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="1dp"
+                android:background="?android:attr/panelFullBackground"
+                android:divider="#000000"
+                app:layout_constraintBottom_toTopOf="@+id/bodygroup2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eCheckBox4"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="445dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="264dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:background="?android:attr/panelFullBackground"
+                android:divider="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.428"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eCheckBox4"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="445dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="496dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:background="?android:attr/panelFullBackground"
+                android:divider="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eCheckBox4"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="445dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="764dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:background="?android:attr/panelFullBackground"
+                android:divider="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eCheckBox4"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/bodygroup1"
+                android:layout_width="109dp"
+                android:layout_height="49dp"
+                android:layout_marginStart="332dp"
+                android:layout_marginLeft="332dp"
+                android:background="#00E91E1E"
+                android:text="@string/chestHeader"
+                android:textColor="#000000"
+                android:textColorHighlight="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/bodygroup2"
+                android:layout_width="196dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="302dp"
+                android:layout_marginLeft="302dp"
+                android:layout_marginTop="340dp"
+                android:background="#00E91E1E"
+                android:text="@string/shoulders"
+                android:textColor="#000000"
+                android:textColorHighlight="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.243"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/bodygroup3"
+                android:layout_width="196dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="302dp"
+                android:layout_marginLeft="302dp"
+                android:layout_marginTop="612dp"
+                android:background="#00E91E1E"
+                android:text="@string/backHeader"
+                android:textColor="#000000"
+                android:textColorHighlight="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/bodygroup4"
+                android:layout_width="196dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="320dp"
+                android:layout_marginLeft="320dp"
+                android:layout_marginTop="840dp"
+                android:background="#00E91E1E"
+                android:text="@string/arms"
+                android:textColor="#000000"
+                android:textColorHighlight="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/bodygroup9"
+                android:layout_width="196dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="300dp"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="1112dp"
+                android:background="#00E91E1E"
+                android:text="Legs"
+                android:textColor="#000000"
+                android:textColorHighlight="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/exerciseView1"
+                android:layout_width="81dp"
+                android:layout_height="27dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="78dp"
+                android:layout_marginEnd="103dp"
+                android:layout_marginRight="103dp"
+                android:text="@string/exercise"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/repView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/repView"
+                android:layout_width="81dp"
+                android:layout_height="27dp"
+                android:layout_marginStart="144dp"
+                android:layout_marginLeft="144dp"
+                android:layout_marginTop="76dp"
+                android:text="@string/reps"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/exerciseView1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox1"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox2"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox3"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="132dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <CheckBox
+                android:id="@+id/eCheckBox4"
+                android:layout_width="175dp"
+                android:layout_height="41dp"
+                android:layout_marginTop="184dp"
+                android:layout_marginEnd="236dp"
+                android:layout_marginRight="236dp"
+                android:text="@string/checkbox"
+                app:buttonTint="#154734"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseView1" />
+
+            <ImageButton
+                android:id="@+id/cameraQR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="83dp"
+                android:layout_marginLeft="83dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="617dp"
+                android:contentDescription="@string/todo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/repView"
+                app:layout_constraintTop_toBottomOf="@+id/bodygroup1"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</ScrollView>

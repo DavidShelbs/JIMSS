@@ -13,12 +13,12 @@ public class MainActivity extends AppCompatActivity {
     CheckBox chest, shoulder, back, arms, legs, cardio;
     Button workoutSubmit;
 
-    Boolean chestChecked = false;
-    Boolean shoulderChecked = false;
-    Boolean backChecked = false;
-    Boolean armsChecked = false;
-    Boolean legsChecked = false;
-    Boolean cardioChecked = false;
+    public static Boolean chestChecked = false;
+    public static Boolean shoulderChecked = false;
+    public static Boolean backChecked = false;
+    public static Boolean armsChecked = false;
+    public static Boolean legsChecked = false;
+    public static Boolean cardioChecked = false;
 
     Boolean buttonProceed = false;
 
@@ -27,36 +27,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        chest = (CheckBox)findViewById(R.id.chestBox);
-        shoulder = (CheckBox)findViewById(R.id.shoulderBox);
-        back = (CheckBox)findViewById(R.id.backBox);
-        arms  = (CheckBox)findViewById(R.id.armsBox);
-        legs  = (CheckBox)findViewById(R.id.legsBox);
-        cardio  = (CheckBox)findViewById(R.id.cardioBox);
-        workoutSubmit = (Button)findViewById(R.id.workout);
+        chest = (CheckBox) findViewById(R.id.chestBox);
+        shoulder = (CheckBox) findViewById(R.id.shoulderBox);
+        back = (CheckBox) findViewById(R.id.backBox);
+        arms = (CheckBox) findViewById(R.id.armsBox);
+        legs = (CheckBox) findViewById(R.id.legsBox);
+        cardio = (CheckBox) findViewById(R.id.cardioBox);
+        workoutSubmit = (Button) findViewById(R.id.workout);
+        Intent intent = new Intent(this, DoingTheWorkout.class); //change NewActivity to the name of the class for the next activity
+
 
         workoutSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!chest.isChecked() && !shoulder.isChecked() && !back.isChecked() && !arms.isChecked() && !legs.isChecked() &&  !cardio.isChecked())
+                if (!chest.isChecked() && !shoulder.isChecked() && !back.isChecked() && !arms.isChecked() && !legs.isChecked() && !cardio.isChecked())
                     workoutSubmit.setError("Must choose body group");
 
 
-                if(chest.isChecked())
+                if (chest.isChecked())
                     chestChecked = true;
-                if(shoulder.isChecked())
+                if (shoulder.isChecked())
                     shoulderChecked = true;
-                if(back.isChecked())
+                if (back.isChecked())
                     backChecked = true;
-                if(arms.isChecked())
+                if (arms.isChecked())
                     armsChecked = true;
-                if(legs.isChecked())
+                if (legs.isChecked())
                     legsChecked = true;
-                if(cardio.isChecked())
+                if (cardio.isChecked())
                     cardioChecked = true;
 
-                openNewActivity();
-
+//                openNewActivity();
+                startActivity(intent);
 
 
                 Log.i("chest Info", String.valueOf(chestChecked));
@@ -67,16 +69,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
-
-
-    public void openNewActivity() {
-//        Intent intent = new Intent(this, NewActivity.class); //change NewActivity to the name of the class for the next activity
-    }
 }
+
+
+
+
+
+
+
+
+//    public void openNewActivity() {
+//        Intent intent = new Intent(this, DoingTheWorkout.class); //change NewActivity to the name of the class for the next activity
+//    }
+//}
 
