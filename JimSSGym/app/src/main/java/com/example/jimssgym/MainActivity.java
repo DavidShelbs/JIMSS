@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         workout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, QRReaderActivity.class));
+                startActivity(new Intent(MainActivity.this, ScanCardViewActivity.class));
             }
         });
         friends_button.setOnClickListener(new View.OnClickListener() {

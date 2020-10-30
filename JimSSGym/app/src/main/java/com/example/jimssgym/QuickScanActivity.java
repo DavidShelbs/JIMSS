@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -186,6 +187,7 @@ public class QuickScanActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         System.out.println("DocumentSnapshot added with ID: " + current_user_id);
+                        Toast.makeText(QuickScanActivity.this, "Exercise Added", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

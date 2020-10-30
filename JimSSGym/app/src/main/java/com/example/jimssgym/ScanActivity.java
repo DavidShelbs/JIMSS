@@ -1,5 +1,6 @@
 package com.example.jimssgym;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -57,7 +58,7 @@ public class ScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan);
         View v = getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
-        String qr_result = getIntent().getStringExtra("QR_RESULT");
+        final String qr_result = getIntent().getStringExtra("QR_RESULT");
 
         exerciseTitle = findViewById(R.id.exerciseTitle);
         exerciseTitle.setText(qr_result.toUpperCase());
@@ -88,6 +89,7 @@ public class ScanActivity extends AppCompatActivity {
                                 System.out.println("Error adding document" + e);
                             }
                         });
+                finish();
             }
         });
 

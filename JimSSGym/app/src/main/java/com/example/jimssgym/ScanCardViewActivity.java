@@ -1,9 +1,11 @@
 package com.example.jimssgym;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,30 +49,22 @@ public class ScanCardViewActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ScanCardViewAdapter adapter;
     List<String> exercise_array = new ArrayList<>();
+    List<String> history_array = new ArrayList<>();
+    TextView subtitle;
+//    String qr_result;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_cardview);
-        String qr_result = getIntent().getStringExtra("QR_RESULT");
-
-        //back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    public void onResume(){
+        super.onResume();
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://fir-app-1039b.appspot.com/");
         StorageReference gsReference = storage.getReferenceFromUrl("gs://fir-app-1039b.appspot.com/workouts.txt");
-        File rootPath = new File(getFilesDir(), "");
-        if(!rootPath.exists()) {
-            rootPath.mkdirs();
-        }
-        final File localFile = new File(rootPath,"workouts.txt");
 
         try {
-            getMyList(qr_result, new DataListener() {
+            getMyList(new DataListener() {
                 @Override
                 public void newDataReceived(ArrayList<ScanCardViewModel> models) {
                     adapter = new ScanCardViewAdapter(ScanCardViewActivity.this, models);
@@ -81,6 +75,22 @@ public class ScanCardViewActivity extends AppCompatActivity {
         } catch (IOException | JSONException | InterruptedException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_scan_cardview);
+        LocalDate date = LocalDate.now();
+        DayOfWeek dow = date.getDayOfWeek();
+        subtitle = findViewById(R.id.cardViewSubtitle);
+        subtitle.setText(dow.toString());
+//        qr_result = getIntent().getStringExtra("QR_RESULT");
+
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     private String readFromFile(Context context) {
@@ -113,54 +123,67 @@ public class ScanCardViewActivity extends AppCompatActivity {
         void newDataReceived(ArrayList<ScanCardViewModel> models);
     }
 
-    public ArrayList<ScanCardViewModel> getMyList(final String qr_result, final DataListener dataListener) throws IOException, JSONException, InterruptedException {
+    public ArrayList<ScanCardViewModel> getMyList(final DataListener dataListener) throws IOException, JSONException, InterruptedException {
 
         final ArrayList<ScanCardViewModel> models = new ArrayList<>();
 
-        Context context = getApplicationContext();
+        final Context context = getApplicationContext();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         final String current_user_id = mAuth.getUid();
-        LocalDate date = LocalDate.now();
-        DayOfWeek dow = date.getDayOfWeek();
+        final LocalDate date = LocalDate.now();
+        final DayOfWeek dow = date.getDayOfWeek();
 
-        CollectionReference collectionReference = db.collection("users/" + current_user_id + "/workouts/" + dow.toString().toLowerCase() + "/exercises");
+        final CollectionReference collectionReference = db.collection("users/" + current_user_id + "/workouts/" + dow.toString().toLowerCase() + "/exercises");
         collectionReference.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                System.out.println(document.getId() + " => " + document.getData());
-                                exercise_array.add(document.getId());
-                            }
-
-                            InputStream machines_json = getResources().openRawResource(R.raw.equipment);
-                            BufferedReader machines_reader = new BufferedReader(new InputStreamReader(machines_json, Charset.forName("UTF-8")));
-                            String machines_lines = "";
-                            try {
-                                while ((machines_lines = machines_reader.readLine()) != null) {
-                                    JSONArray machinesArray = new JSONArray(machines_lines);
-                                    for (int i = 0; i < machinesArray.length(); i++) {
-                                        try {
-                                            JSONObject machinesObject = machinesArray.getJSONObject(i);
-                                            String equipment_name = machinesObject.getString("name");
-                                            String equipment_id = machinesObject.getString("id");
-                                            if (equipment_name.toLowerCase().equals(qr_result.toLowerCase())) {
-                                                InputStream exercises_json = getResources().openRawResource(R.raw.exercises);
-                                                BufferedReader exercises_reader = new BufferedReader(new InputStreamReader(exercises_json, Charset.forName("UTF-8")));
-                                                String exercises_lines = "";
-                                                try {
-                                                    while ((exercises_lines = exercises_reader.readLine()) != null) {
-                                                        JSONArray exercisesArray = new JSONArray(exercises_lines);
-                                                        for (int j = 0; j < exercisesArray.length(); j++) {
-                                                            try {
-                                                                ScanCardViewModel m = new ScanCardViewModel();
-                                                                JSONObject exerciseObject = exercisesArray.getJSONObject(j);
-                                                                String equipment_string = exerciseObject.getString("equipment");
-                                                                String exercise_name = exerciseObject.getString("name");
-                                                                String exercise_id = exerciseObject.getString("id");
+                   @Override
+                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                       if (task.isSuccessful()) {
+                           for (QueryDocumentSnapshot document : task.getResult()) {
+                               System.out.println(document.getId() + " => " + document.getData());
+                               exercise_array.add(document.getId());
+                           }
+                           if (exercise_array.size() == 0) {
+                               Intent intent = new Intent(context, SuggestedWorkoutActivity.class);
+                               startActivity(intent);
+                               finish();
+                           } else {
+                               CollectionReference collectionReference2 = db.collection("users/" + current_user_id + "/history/" + date.toString().toLowerCase() + "/exercises");
+                               collectionReference2.get()
+                                       .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                           @Override
+                                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                               if (task.isSuccessful()) {
+                                                   for (QueryDocumentSnapshot document : task.getResult()) {
+                                                       System.out.println(document.getId() + " => " + document.getData());
+                                                       history_array.add(document.getId());
+                                                   }
+                                                   InputStream machines_json = getResources().openRawResource(R.raw.equipment);
+                                                   BufferedReader machines_reader = new BufferedReader(new InputStreamReader(machines_json, Charset.forName("UTF-8")));
+                                                   String machines_lines = "";
+                                                   try {
+                                                       while ((machines_lines = machines_reader.readLine()) != null) {
+                                                           JSONArray machinesArray = new JSONArray(machines_lines);
+                                                           for (int i = 0; i < machinesArray.length(); i++) {
+                                                               try {
+                                                                   JSONObject machinesObject = machinesArray.getJSONObject(i);
+                                                                   String equipment_name = machinesObject.getString("name");
+                                                                   String equipment_id = machinesObject.getString("id");
+                                                                   InputStream exercises_json = getResources().openRawResource(R.raw.exercises);
+                                                                   BufferedReader exercises_reader = new BufferedReader(new InputStreamReader(exercises_json, Charset.forName("UTF-8")));
+                                                                   String exercises_lines = "";
+                                                                   try {
+                                                                       while ((exercises_lines = exercises_reader.readLine()) != null) {
+                                                                           JSONArray exercisesArray = new JSONArray(exercises_lines);
+                                                                           for (int j = 0; j < exercisesArray.length(); j++) {
+                                                                               try {
+                                                                                   ScanCardViewModel m = new ScanCardViewModel();
+                                                                                   JSONObject exerciseObject = exercisesArray.getJSONObject(j);
+                                                                                   String equipment_string = exerciseObject.getString("equipment");
+                                                                                   String exercise_name = exerciseObject.getString("name");
+                                                                                   String exercise_id = exerciseObject.getString("id");
 
 //                                            InputStream images_json = getResources().openRawResource(R.raw.images);
 //                                            BufferedReader images_reader = new BufferedReader(new InputStreamReader(images_json, Charset.forName("UTF-8")));
@@ -190,102 +213,118 @@ public class ScanCardViewActivity extends AppCompatActivity {
 //                                                e.printStackTrace();
 //                                            }
 
-                                                                String muscle_string = exerciseObject.getString("muscles");
-                                                                muscle_string = muscle_string.substring(1, muscle_string.length() - 1);
-                                                                String muscles[] = muscle_string.split(",");
-                                                                muscle_string = "";
-                                                                for (int k=0; k < muscles.length; k++) {
-                                                                    if (!muscle_string.equals("")) {
-                                                                        muscle_string += ", ";
-                                                                    }
-                                                                    switch (muscles[k])
-                                                                    {
-                                                                        case "1":
-                                                                            muscle_string += "Biceps brachii";
-                                                                            break;
-                                                                        case "2":
-                                                                            muscle_string += "Anterior deltoid";
-                                                                            break;
-                                                                        case "3":
-                                                                            muscle_string += "Serratus anterior";
-                                                                            break;
-                                                                        case "4":
-                                                                            muscle_string += "Pectoralis major";
-                                                                            break;
-                                                                        case "5":
-                                                                            muscle_string += "Triceps brachii";
-                                                                            break;
-                                                                        case "6":
-                                                                            muscle_string += "Rectus abdominis";
-                                                                            break;
-                                                                        case "7":
-                                                                            muscle_string += "Gastrocnemius";
-                                                                            break;
-                                                                        case "8":
-                                                                            muscle_string += "Gluteus maximus";
-                                                                            break;
-                                                                        case "9":
-                                                                            muscle_string += "Trapezius";
-                                                                            break;
-                                                                        case "10":
-                                                                            muscle_string += "Quadriceps femoris";
-                                                                            break;
-                                                                        case "11":
-                                                                            muscle_string += "Biceps femoris";
-                                                                            break;
-                                                                        case "12":
-                                                                            muscle_string += "Latissimus dorsi";
-                                                                            break;
-                                                                        case "13":
-                                                                            muscle_string += "Brachialis";
-                                                                            break;
-                                                                        case "14":
-                                                                            muscle_string += "Obliquus externus abdominis";
-                                                                            break;
-                                                                        case "15":
-                                                                            muscle_string += "Soleus";
-                                                                            break;
-                                                                    }
-                                                                }
-                                                                equipment_string = equipment_string.substring(1, equipment_string.length() - 1);
-                                                                String equipment_array[] = equipment_string.split(",");
-                                                                List<String> equipment = Arrays.asList(equipment_array);
+                                                                                   String muscle_string = exerciseObject.getString("muscles");
+                                                                                   muscle_string = muscle_string.substring(1, muscle_string.length() - 1);
+                                                                                   String muscles[] = muscle_string.split(",");
+                                                                                   muscle_string = "";
+                                                                                   for (int k = 0; k < muscles.length; k++) {
+                                                                                       if (!muscle_string.equals("")) {
+                                                                                           muscle_string += ", ";
+                                                                                       }
+                                                                                       switch (muscles[k]) {
+                                                                                           case "1":
+                                                                                               muscle_string += "Biceps brachii";
+                                                                                               break;
+                                                                                           case "2":
+                                                                                               muscle_string += "Anterior deltoid";
+                                                                                               break;
+                                                                                           case "3":
+                                                                                               muscle_string += "Serratus anterior";
+                                                                                               break;
+                                                                                           case "4":
+                                                                                               muscle_string += "Pectoralis major";
+                                                                                               break;
+                                                                                           case "5":
+                                                                                               muscle_string += "Triceps brachii";
+                                                                                               break;
+                                                                                           case "6":
+                                                                                               muscle_string += "Rectus abdominis";
+                                                                                               break;
+                                                                                           case "7":
+                                                                                               muscle_string += "Gastrocnemius";
+                                                                                               break;
+                                                                                           case "8":
+                                                                                               muscle_string += "Gluteus maximus";
+                                                                                               break;
+                                                                                           case "9":
+                                                                                               muscle_string += "Trapezius";
+                                                                                               break;
+                                                                                           case "10":
+                                                                                               muscle_string += "Quadriceps femoris";
+                                                                                               break;
+                                                                                           case "11":
+                                                                                               muscle_string += "Biceps femoris";
+                                                                                               break;
+                                                                                           case "12":
+                                                                                               muscle_string += "Latissimus dorsi";
+                                                                                               break;
+                                                                                           case "13":
+                                                                                               muscle_string += "Brachialis";
+                                                                                               break;
+                                                                                           case "14":
+                                                                                               muscle_string += "Obliquus externus abdominis";
+                                                                                               break;
+                                                                                           case "15":
+                                                                                               muscle_string += "Soleus";
+                                                                                               break;
+                                                                                       }
+                                                                                   }
+                                                                                   equipment_string = equipment_string.substring(1, equipment_string.length() - 1);
+                                                                                   String equipment_array[] = equipment_string.split(",");
+                                                                                   List<String> equipment = Arrays.asList(equipment_array);
 //                                                                System.out.println(exercise_name);
 //                                                                System.out.println(exercise_array.contains(exercise_name.toUpperCase()));
 //                                                                System.out.println(equipment.contains(equipment_id));
-                                                                if (equipment.contains(equipment_id) && exercise_array.contains(exercise_name.toUpperCase())) {
-                                                                    m.setTitle(exercise_name);
-                                                                    m.setDescription(muscle_string);
-                                                                    models.add(m);
-                                                                }
+                                                                                   if (exercise_array.contains(exercise_name.toUpperCase()) && !history_array.contains(exercise_name.toUpperCase())) {
+                                                                                       m.setTitle(exercise_name);
+                                                                                       m.setDescription(muscle_string);
+                                                                                       Boolean already_exits = false;
+                                                                                       for (int p = 0; p < models.size(); p++) {
+                                                                                           if (models.get(p).getTitle().equals(exercise_name)) {
+                                                                                               already_exits = true;
+                                                                                               break;
+                                                                                           }
+                                                                                       }
+                                                                                       if (!already_exits) {
+                                                                                           models.add(m);
+                                                                                       }
+                                                                                   }
 
-                                                            } catch (JSONException ex) {
-                                                                ex.printStackTrace();
-                                                            }
-                                                        }
-                                                    }
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-                            } catch (JSONException | IOException e) {
-                                e.printStackTrace();
-                            }
-//                            System.out.println(models.size());
-                            dataListener.newDataReceived(models);
-                        }
-                        else {
-                            System.out.println("Error getting documents: " + task.getException());
-                        }
-                    }
-                });
+                                                                               } catch (JSONException ex) {
+                                                                                   ex.printStackTrace();
+                                                                               }
+                                                                           }
+                                                                       }
+                                                                   } catch (IOException e) {
+                                                                       e.printStackTrace();
+                                                                   } catch (JSONException e) {
+                                                                       e.printStackTrace();
+                                                                   }
+                                                               } catch (JSONException e) {
+                                                                   e.printStackTrace();
+                                                               }
+                                                           }
+                                                       }
+                                                   } catch (JSONException | IOException e) {
+                                                       e.printStackTrace();
+                                                   }
+                                                   if (models.size() == 0)
+                                                   {
+                                                       LocalDate date = LocalDate.now();
+                                                       DayOfWeek dow = date.getDayOfWeek();
+                                                       subtitle = findViewById(R.id.cardViewSubtitle);
+                                                       subtitle.setText(dow.toString() + " - All Complete");
+                                                   }
+                                                   dataListener.newDataReceived(models);
+                                               } else {
+                                                   System.out.println("Error getting documents: " + task.getException());
+                                               }
+                                           }
+                                       });
+                           }
+                       }
+                   }
+               });
 
 
 //        String current_user_data = readFromFile(context);
