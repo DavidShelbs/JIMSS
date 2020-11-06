@@ -71,11 +71,27 @@ public class ScanActivity extends AppCompatActivity {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 final String current_user_id = mAuth.getUid();
                 LocalDate date = LocalDate.now();
+                DayOfWeek dow = date.getDayOfWeek();
                 Map<String, Object> user_workout = new HashMap<>();
                 user_workout.put("reps", reps.getValue());
                 user_workout.put("sets", sets.getValue());
 
                 db.collection("users").document(current_user_id + "/history/" + date.toString().toLowerCase() + "/exercises/" + exerciseTitle.getText())
+                        .set(user_workout)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                System.out.println("DocumentSnapshot added with ID: " + current_user_id);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("Error adding document" + e);
+                            }
+                        });
+
+                db.collection("users").document(current_user_id + "/workouts/" + dow.toString().toLowerCase() + "/exercises/" + exerciseTitle.getText())
                         .set(user_workout)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

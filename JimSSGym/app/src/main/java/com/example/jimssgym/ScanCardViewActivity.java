@@ -185,33 +185,33 @@ public class ScanCardViewActivity extends AppCompatActivity {
                                                                                    String exercise_name = exerciseObject.getString("name");
                                                                                    String exercise_id = exerciseObject.getString("id");
 
-//                                            InputStream images_json = getResources().openRawResource(R.raw.images);
-//                                            BufferedReader images_reader = new BufferedReader(new InputStreamReader(images_json, Charset.forName("UTF-8")));
-//                                            String images_lines = "";
-//                                            try {
-//                                                while ((images_lines = images_reader.readLine()) != null) {
-//                                                    JSONArray imagesArray = new JSONArray(images_lines);
-//                                                    for (int l = 0; l < imagesArray.length(); l++) {
-//                                                        try {
-//                                                            JSONObject imagesObject = imagesArray.getJSONObject(l);
-//                                                            String images_exercise = imagesObject.getString("exercise");
-//                                                            if (images_exercise.toLowerCase().equals(exercise_id.toLowerCase())) {
-//                                                                String image_id = imagesObject.getString("id");
-//                                                                String image_name = "exercise_image_" + image_id;
-//                                                                int id = getApplicationContext().getResources().getIdentifier(image_name, "drawable", getApplicationContext().getPackageName());
-//                                                                m.setImg(id);
-//                                                                break;
-//                                                            }
-//                                                        } catch (JSONException e) {
-//                                                            e.printStackTrace();
-//                                                        }
-//                                                    }
-//                                                }
-//                                            } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                            } catch (JSONException e) {
-//                                                e.printStackTrace();
-//                                            }
+//                                                                                    InputStream images_json = getResources().openRawResource(R.raw.images);
+//                                                                                    BufferedReader images_reader = new BufferedReader(new InputStreamReader(images_json, Charset.forName("UTF-8")));
+//                                                                                    String images_lines = "";
+//                                                                                    try {
+//                                                                                        while ((images_lines = images_reader.readLine()) != null) {
+//                                                                                            JSONArray imagesArray = new JSONArray(images_lines);
+//                                                                                            for (int l = 0; l < imagesArray.length(); l++) {
+//                                                                                                try {
+//                                                                                                    JSONObject imagesObject = imagesArray.getJSONObject(l);
+//                                                                                                    String images_exercise = imagesObject.getString("exercise");
+//                                                                                                    if (images_exercise.toLowerCase().equals(exercise_id.toLowerCase())) {
+//                                                                                                        String image_id = imagesObject.getString("id");
+//                                                                                                        String image_name = "exercise_image_" + image_id;
+//                                                                                                        int id = getApplicationContext().getResources().getIdentifier(image_name, "drawable", getApplicationContext().getPackageName());
+//                                                                                                        m.setImg(id);
+//                                                                                                        break;
+//                                                                                                    }
+//                                                                                                } catch (JSONException e) {
+//                                                                                                    e.printStackTrace();
+//                                                                                                }
+//                                                                                            }
+//                                                                                        }
+//                                                                                    } catch (IOException e) {
+//                                                                                        e.printStackTrace();
+//                                                                                    } catch (JSONException e) {
+//                                                                                        e.printStackTrace();
+//                                                                                    }
 
                                                                                    String muscle_string = exerciseObject.getString("muscles");
                                                                                    muscle_string = muscle_string.substring(1, muscle_string.length() - 1);
@@ -272,9 +272,6 @@ public class ScanCardViewActivity extends AppCompatActivity {
                                                                                    equipment_string = equipment_string.substring(1, equipment_string.length() - 1);
                                                                                    String equipment_array[] = equipment_string.split(",");
                                                                                    List<String> equipment = Arrays.asList(equipment_array);
-//                                                                System.out.println(exercise_name);
-//                                                                System.out.println(exercise_array.contains(exercise_name.toUpperCase()));
-//                                                                System.out.println(equipment.contains(equipment_id));
                                                                                    if (exercise_array.contains(exercise_name.toUpperCase()) && !history_array.contains(exercise_name.toUpperCase())) {
                                                                                        m.setTitle(exercise_name);
                                                                                        m.setDescription(muscle_string);
