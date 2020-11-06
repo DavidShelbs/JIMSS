@@ -114,12 +114,11 @@ public class QuickScanCardViewActivity extends AppCompatActivity {
                                             muscle_string = muscle_string.substring(1, muscle_string.length() - 1);
                                             String muscles[] = muscle_string.split(",");
                                             muscle_string = "";
-                                            for (int k=0; k < muscles.length; k++) {
+                                            for (int k = 0; k < muscles.length; k++) {
                                                 if (!muscle_string.equals("")) {
                                                     muscle_string += ", ";
                                                 }
-                                                switch (muscles[k])
-                                                {
+                                                switch (muscles[k]) {
                                                     case "1":
                                                         muscle_string += "Biceps brachii";
                                                         break;

@@ -7,10 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -19,7 +16,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,21 +29,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,6 +59,9 @@ public class QuickScanActivity extends AppCompatActivity {
     private Handler handler;
     private Button workout_button;
     private String exercise_id;
+    private NumberPicker picker;
+    private String[] days_of_week = new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
 
 
     @Override
@@ -79,6 +76,11 @@ public class QuickScanActivity extends AppCompatActivity {
         workout_button = findViewById(R.id.add_workout_button);
         exerciseTitle = findViewById(R.id.exerciseTitle);
         exerciseTitle.setText(qr_result.toUpperCase());
+
+        picker = findViewById(R.id.dow);
+        picker.setMinValue(0);
+        picker.setMaxValue(6);
+        picker.setDisplayedValues(days_of_week);
 
         try {
             exercise_id = readData(qr_result);
@@ -167,51 +169,49 @@ public class QuickScanActivity extends AppCompatActivity {
 
     private void add_workout(final String exercise_id) throws JSONException, IOException, InterruptedException {
 
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         final String current_user_id = mAuth.getUid();
-        String user_fname = mAuth.getCurrentUser().getDisplayName();
+//        String user_fname = mAuth.getCurrentUser().getDisplayName();
 
         // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("userid", current_user_id);
-        String workout_id = "0";
+        Map<String, Object> user_workout = new HashMap<>();
+        user_workout.put("reps", 1);
+        user_workout.put("sets", 1);
+        String dow = days_of_week[picker.getValue()].toLowerCase();
 
         // Add a new document with a generated ID
-//        db.collection("users").document(current_user_id + "/workouts/" + workout_id)
-//                .set(user)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        System.out.println("DocumentSnapshot added with ID: " + current_user_id);
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        System.out.println("Error adding document" + e);
-//                    }
-//                });
-
-        String dow = "monday";
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("users").document(current_user_id + "/workouts/" + dow + "/exercises");
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        System.out.println("DocumentSnapshot data: " + document.getData());
-                    } else {
-                        System.out.println("No such document");
+        db.collection("users").document(current_user_id + "/workouts/" + dow + "/exercises/" + exerciseTitle.getText())
+                .set(user_workout)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        System.out.println("DocumentSnapshot added with ID: " + current_user_id);
+                        Toast.makeText(QuickScanActivity.this, "Exercise Added", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    System.out.println("get failed with " + task.getException());
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("Error adding document" + e);
+                    }
+                });
+
+
+        db.collection("users/" + current_user_id + "/workouts/" + dow + "/exercises")
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            System.out.println(document.getId() + " => " + document.getData());
+                        }
+                    } else {
+                        System.out.println("Error getting documents: " + task.getException());
+                    }
                 }
-            }
-        });
+            });
 
 
 //        FirebaseStorage storage = FirebaseStorage.getInstance("gs://fir-app-1039b.appspot.com/");
