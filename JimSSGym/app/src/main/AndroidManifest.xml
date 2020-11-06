@@ -38,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name=".FriendsActivity" android:parentActivityName=".MainActivity">
+        <activity android:label="Friends" android:name=".FriendsActivity" android:parentActivityName=".MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -51,19 +51,28 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".FillCalenderActivity" android:parentActivityName=".FriendsActivity">
+        <activity android:label="Friends" android:name=".FillCalenderActivity" android:parentActivityName=".FriendsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:label="@string/app_name" android:name=".CalenderActivity"
+        <activity android:label="Friends" android:name=".CalenderActivity"
             android:parentActivityName=".FriendsActivity">
         </activity>
 
         <activity android:name=".PopUpWorkoutActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
         ></activity>
+        <activity android:name=".PopUpAddTime"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            ></activity>
+        <activity android:name=".PopUpDelete"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            ></activity>
+        <activity android:name=".AddFriendsActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            ></activity>
         <activity android:label="@string/app_name" android:name=".UserSetupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

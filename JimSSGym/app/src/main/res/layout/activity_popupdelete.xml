@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-style="@style/Theme.AppCompat.Light.Dialog.Alert"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@drawable/dialog_bg"
-tools:context=".PopUpWorkoutActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.AppCompat.Light.Dialog.Alert"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg"
+    tools:context=".PopUpAddTime">
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -27,38 +27,6 @@ tools:context=".PopUpWorkoutActivity">
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-<!--            <TextView-->
-<!--                android:id="@+id/pop"-->
-<!--                android:layout_width="325dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center|center_horizontal|center_vertical"-->
-<!--                android:gravity="center|center_horizontal|center_vertical"-->
-<!--                android:text="@string/exercisetitle"-->
-<!--                android:textColor="@color/ORIENT"-->
-<!--                android:textSize="44sp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.348"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintVertical_bias="0.183" />-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -70,15 +38,15 @@ tools:context=".PopUpWorkoutActivity">
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="133dp"
                 android:gravity="center|center_horizontal|center_vertical"
-                android:text="WOD"
+                android:text="Delete Event"
                 android:textColor="@color/ORIENT"
-                android:textSize="44sp"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/day_selected"
+                android:id="@+id/type"
                 android:layout_width="326dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -101,27 +69,15 @@ tools:context=".PopUpWorkoutActivity">
                 android:layout_height="5dp"
                 android:background="@color/CANDLELIGHT" />
 
-            <TextView
-                android:id="@+id/wod"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text=""
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
 
-<!--            <Button-->
-<!--                android:id="@+id/add_workout_button"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:backgroundTint="@color/CANDLELIGHT"-->
-<!--                android:text="Add To Workout"-->
-<!--                android:textSize="20dp" />-->
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/design_default_color_error"
+                android:layout_marginTop="25dp"
+                android:text="Delete"
+                android:textSize="20dp" />
 
 
         </LinearLayout>

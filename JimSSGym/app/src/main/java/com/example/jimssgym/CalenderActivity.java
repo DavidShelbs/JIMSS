@@ -141,7 +141,7 @@ public abstract class CalenderActivity extends AppCompatActivity implements Week
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
         if (event.getName().equals("WOD")){
             startActivity(new Intent(CalenderActivity.this, PopUpWorkoutActivity.class));
         }
@@ -156,7 +156,10 @@ public abstract class CalenderActivity extends AppCompatActivity implements Week
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Bundle extra = getIntent().getExtras();
         if ("Your Calender".equals(extra.getString("EXTRA_NAME"))){
-            Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(CalenderActivity.this, PopUpDelete.class);
+            intent.putExtra("POPTYPE", event.getName());
+            startActivity(intent);
         }
     }
 
@@ -164,7 +167,10 @@ public abstract class CalenderActivity extends AppCompatActivity implements Week
     public void onEmptyViewLongPress(Calendar time) {
         Bundle extra = getIntent().getExtras();
         if ("Your Calender".equals(extra.getString("EXTRA_NAME"))){
-            Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(CalenderActivity.this, PopUpAddTime.class);
+            intent.putExtra("POPTYPE", getEventTitle(time));
+            startActivity(intent);
         }
     }
 

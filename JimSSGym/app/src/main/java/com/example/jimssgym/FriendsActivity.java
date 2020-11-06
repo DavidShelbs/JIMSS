@@ -1,14 +1,20 @@
 package com.example.jimssgym;
 
 import android.content.Intent;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,7 +43,11 @@ public class FriendsActivity extends AppCompatActivity implements AdapterView.On
         lv = findViewById(R.id.lv);
 
         //back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar topToolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(topToolBar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         nameList = new ArrayList<>();
         mondayList = DataHelper.loadWorkout(this, "dataFriends.json");
@@ -55,6 +65,17 @@ public class FriendsActivity extends AppCompatActivity implements AdapterView.On
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameList);
         lv.setAdapter((ListAdapter) adapter);
         lv.setOnItemClickListener(this);
+
+        // Submit button
+        Button button = findViewById(R.id.add_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(FriendsActivity.this, "Clicked add", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(FriendsActivity.this, AddFriendsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
