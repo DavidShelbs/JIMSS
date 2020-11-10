@@ -68,7 +68,6 @@ public class QuickScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quickscan);
-        isStoragePermissionGranted();
         View v = getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
         String qr_result = getIntent().getStringExtra("QR_RESULT");
@@ -117,17 +116,6 @@ public class QuickScanActivity extends AppCompatActivity {
             this.finish();
         }
         return super.dispatchTouchEvent(ev);
-    }
-
-    public  boolean isStoragePermissionGranted() {
-        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            return false;
-        }
     }
 
     private String readFromFile(Context context) {
