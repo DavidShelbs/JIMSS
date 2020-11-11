@@ -54,7 +54,7 @@
         android:backgroundTint="#005F83"
         android:fontFamily="sans-serif-smallcaps"
         android:paddingTop="200dp"
-        android:text="Scan"
+        android:text="Workout"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="24sp"

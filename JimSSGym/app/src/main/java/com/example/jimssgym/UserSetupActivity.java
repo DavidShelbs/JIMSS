@@ -1,5 +1,6 @@
 package com.example.jimssgym;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -14,7 +15,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class UserSetupActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -71,6 +81,30 @@ public class UserSetupActivity extends AppCompatActivity implements AdapterView.
                 if (!validateWeight() | !validateHeight() | !validateGoal() | !validateLevel()) {
                     return;
                 }
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                final String current_user_id = mAuth.getUid();
+                Map<String, Object> user_workout = new HashMap<>();
+                user_workout.put("goal", goalInput.getSelectedItem().toString());
+                user_workout.put("level", levelInput.getSelectedItem().toString());
+                user_workout.put("height", Integer.parseInt(weightInput.getText().toString()));
+                user_workout.put("weight", Integer.parseInt(heightInput.getText().toString()));
+
+                db.collection("users").document(current_user_id)
+                        .set(user_workout)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                System.out.println("DocumentSnapshot added with ID: " + current_user_id);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("Error adding document" + e);
+                            }
+                        });
                 openNewActivity();
             }
         });
