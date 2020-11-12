@@ -1,34 +1,41 @@
 package com.example.jimssgym;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.DatePicker;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
-import android.widget.ToggleButton;
+import android.widget.EditText;
 
-import java.util.Calendar;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class AddFriendsActivity extends Activity {
 
-//    private TextView popUp;
+    EditText search_edit_text;
+    RecyclerView recyclerView;
+    DatabaseReference databaseReference;
+    FirebaseUser firebaseUser;
+    ArrayList<String> fullNameList;
+//    ArrayList<String> userIDList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        String clickedType = getIntent().getStringExtra("POPTYPE");
 
         View v = getWindow().getDecorView();
         v.setBackgroundResource(android.R.color.transparent);
@@ -41,20 +48,66 @@ public class AddFriendsActivity extends Activity {
 
         setContentView(R.layout.activity_addfriends);
 
-//        popUp = findViewById(R.id.type);
-//        popUp.setText(clickedType);
+        search_edit_text = findViewById(R.id.search_edit_text);
+        recyclerView = findViewById(R.id.recyclerView);
 
-//        // Submit button
-//        Button button = findViewById(R.id.delete_button);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(PopUpDelete.this, "Deleted Event", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        fullNameList = new ArrayList<>();
+//        userIDList = new ArrayList<>();
+
+        search_edit_text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().isEmpty()){
+                    setAdapter(s.toString());
+
+                }
+            }
+        });
 
 
+    }
 
+    private void setAdapter(final String searchedString) {
+        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int counter = 0;
+
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    String uid = snapshot.getKey();
+                    String full_name = snapshot.child("full_name").getValue(String.class);
+
+                    if (full_name.contains(searchedString)){
+                        fullNameList.add(full_name);
+                        counter++;
+                    }
+                    if (counter == 15)
+                        break;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }
