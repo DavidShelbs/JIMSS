@@ -113,9 +113,64 @@ public class PopUpDelete extends Activity {
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
                         }
+
+                        DocumentReference docRef2 = db.collection("users").document(current_user_id + "/calendar/personal_calendar");
+                        docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                String day = null;
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+
+                                        Intent intent = new Intent(PopUpDelete.this, FillCalenderActivity.class);
+                                        String monday = ";;";
+                                        String tuesday = ";;";
+                                        String wednesday = ";;";
+                                        String thursday = ";;";
+                                        String friday = ";;";
+                                        String saturday = ";;";
+                                        String sunday = ";;";
+
+                                        if (document.getString("monday") != null)
+                                            monday = document.getData().get("monday").toString();
+                                        if (document.getString("tuesday") != null)
+                                            tuesday = document.getData().get("tuesday").toString();
+                                        if (document.getString("wednesday") != null)
+                                            wednesday = document.getData().get("wednesday").toString();
+                                        if (document.getString("thursday") != null)
+                                            thursday = document.getData().get("thursday").toString();
+                                        if (document.getString("friday") != null)
+                                            friday = document.getData().get("friday").toString();
+                                        if (document.getString("saturday") != null)
+                                            saturday = document.getData().get("saturday").toString();
+                                        if (document.getString("sunday") != null)
+                                            sunday = document.getData().get("sunday").toString();
+
+                                        intent.putExtra("EXTRA_NAME", "Your Calender");
+                                        intent.putExtra("EXTRA_MONDAY", monday);
+                                        intent.putExtra("EXTRA_TUESDAY", tuesday);
+                                        intent.putExtra("EXTRA_WEDNESDAY", wednesday);
+                                        intent.putExtra("EXTRA_THURSDAY", thursday);
+                                        intent.putExtra("EXTRA_FRIDAY", friday);
+                                        intent.putExtra("EXTRA_SATURDAY", saturday);
+                                        intent.putExtra("EXTRA_SUNDAY", sunday);
+
+                                        startActivity(intent);
+                                        finish();
+
+                                    } else {
+                                        Log.d(TAG, "No such document");
+                                    }
+
+                                } else {
+                                    Log.d(TAG, "get failed with ", task.getException());
+                                }
+                            }
+                        });
                     }
                 });
-
             }
         });
 

@@ -1,9 +1,11 @@
 package com.example.jimssgym;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 
@@ -18,6 +20,12 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -30,6 +38,7 @@ import java.util.Locale;
 
 public abstract class CalenderActivity extends AppCompatActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
 
+    private static final String TAG = "CalendarActivity";
     private TextView name;
 
     private static final int TYPE_DAY_VIEW = 1;
@@ -75,12 +84,72 @@ public abstract class CalenderActivity extends AppCompatActivity implements Week
 //    @Override
 //    public void onResume(){
 //        super.onResume();
-//        LocalDate date = LocalDate.now();
-//        DayOfWeek dow = date.getDayOfWeek();
-//        Month month = date.getMonth();
-//        int year = date.getYear();
-//        FillCalenderActivity fillCalenderActivity = new FillCalenderActivity();
-//        fillCalenderActivity.onMonthChange(year, month.getValue());
+//        mWeekView.invalidate();
+//
+//
+//        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//        final String current_user_id = mAuth.getUid();
+//
+//
+//        DocumentReference docRef = db.collection("users").document(current_user_id + "/calendar/personal_calendar");
+//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                String day = null;
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+//                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+//
+//                        Intent intent = new Intent(CalenderActivity.this, FillCalenderActivity.class);
+//                        String monday = ";;";
+//                        String tuesday = ";;";
+//                        String wednesday = ";;";
+//                        String thursday = ";;";
+//                        String friday = ";;";
+//                        String saturday = ";;";
+//                        String sunday = ";;";
+//
+//                        if (document.getString("monday") != null)
+//                            monday = document.getData().get("monday").toString();
+//                        if (document.getString("tuesday") != null)
+//                            tuesday = document.getData().get("tuesday").toString();
+//                        if (document.getString("wednesday") != null)
+//                            wednesday = document.getData().get("wednesday").toString();
+//                        if (document.getString("thursday") != null)
+//                            thursday = document.getData().get("thursday").toString();
+//                        if (document.getString("friday") != null)
+//                            friday = document.getData().get("friday").toString();
+//                        if (document.getString("saturday") != null)
+//                            saturday = document.getData().get("saturday").toString();
+//                        if (document.getString("sunday") != null)
+//                            sunday = document.getData().get("sunday").toString();
+//
+//                        intent.putExtra("EXTRA_NAME", "Your Calender");
+//                        intent.putExtra("EXTRA_MONDAY", monday);
+//                        intent.putExtra("EXTRA_TUESDAY", tuesday);
+//                        intent.putExtra("EXTRA_WEDNESDAY", wednesday);
+//                        intent.putExtra("EXTRA_THURSDAY", thursday);
+//                        intent.putExtra("EXTRA_FRIDAY", friday);
+//                        intent.putExtra("EXTRA_SATURDAY", saturday);
+//                        intent.putExtra("EXTRA_SUNDAY", sunday);
+//
+//                        startActivity(intent);
+//
+//
+//                    }else{
+//                        Log.d(TAG, "No such document");
+//                    }
+//
+//                } else {
+//                    Log.d(TAG, "get failed with ", task.getException());
+//                }
+//            }
+//        });
+//
+//
+//        System.out.println("hi");
 //    }
 
     @Override
