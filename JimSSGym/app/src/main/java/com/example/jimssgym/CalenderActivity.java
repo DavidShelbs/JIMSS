@@ -20,6 +20,11 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -66,6 +71,17 @@ public abstract class CalenderActivity extends AppCompatActivity implements Week
         mWeekView.setEmptyViewLongPressListener(this);
 
     }
+
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//        LocalDate date = LocalDate.now();
+//        DayOfWeek dow = date.getDayOfWeek();
+//        Month month = date.getMonth();
+//        int year = date.getYear();
+//        FillCalenderActivity fillCalenderActivity = new FillCalenderActivity();
+//        fillCalenderActivity.onMonthChange(year, month.getValue());
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -157,8 +173,13 @@ public abstract class CalenderActivity extends AppCompatActivity implements Week
         Bundle extra = getIntent().getExtras();
         if ("Your Calender".equals(extra.getString("EXTRA_NAME"))){
 //            Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+            Integer day = event.getStartTime().get(Calendar.DAY_OF_WEEK);
+            String[] days_of_week = new String[] {"", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"};
+            String daySelected = days_of_week[day];
+
             Intent intent = new Intent(CalenderActivity.this, PopUpDelete.class);
-            intent.putExtra("POPTYPE", event.getName());
+//            intent.putExtra("POPTYPE", event.getName());
+            intent.putExtra("POPTYPE", daySelected);
             startActivity(intent);
         }
     }
