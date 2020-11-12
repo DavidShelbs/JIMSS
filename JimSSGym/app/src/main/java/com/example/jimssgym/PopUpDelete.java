@@ -102,7 +102,6 @@ public class PopUpDelete extends Activity {
                                         public void onSuccess(Void aVoid) {
                                             System.out.println("DocumentSnapshot added with ID: " + current_user_id);
                                             Toast.makeText(PopUpDelete.this, "Deleted Event", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(PopUpDelete.this, FillCalenderActivity.class));
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
