@@ -52,10 +52,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ScanCardViewActivity.class));
             }
         });
+
+        //replace Capacity with FriendsActivity to change back to normal
         friends_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, FriendsActivity.class));
+                startActivity(new Intent(MainActivity.this, Capacity.class));
             }
         });
 
