@@ -1,8 +1,6 @@
 package com.example.jimssgym;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -22,14 +20,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -73,7 +69,7 @@ public class QuickScanActivity extends AppCompatActivity {
         String qr_result = getIntent().getStringExtra("QR_RESULT");
         exerciseImage = findViewById(R.id.imageView);
         workout_button = findViewById(R.id.add_workout_button);
-        exerciseTitle = findViewById(R.id.exerciseTitle);
+        exerciseTitle = findViewById(R.id.FName);
         exerciseTitle.setText(qr_result.toUpperCase());
 
         picker = findViewById(R.id.dow);
@@ -297,7 +293,7 @@ public class QuickScanActivity extends AppCompatActivity {
     }
 
     private String readData(String qr_result) throws IOException {
-        exerciseArea = findViewById(R.id.exerciseArea);
+        exerciseArea = findViewById(R.id.LName);
         exerciseDescription = findViewById(R.id.exerciseDescription);
         exerciseImage = findViewById(R.id.imageView);
         AnimationDrawable animation;

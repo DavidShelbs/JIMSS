@@ -59,7 +59,7 @@
             android:name=".PopUpDelete"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
-            android:name=".AddFriendsActivity"
+            android:name=".FriendCardViewActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:label="@string/app_name"

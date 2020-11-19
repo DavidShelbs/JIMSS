@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -72,7 +71,7 @@ public class FriendsActivity extends AppCompatActivity implements AdapterView.On
             @Override
             public void onClick(View v) {
 //                Toast.makeText(FriendsActivity.this, "Clicked add", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(FriendsActivity.this, AddFriendsActivity.class);
+                Intent intent = new Intent(FriendsActivity.this, FriendCardViewActivity.class);
                 startActivity(intent);
             }
         });

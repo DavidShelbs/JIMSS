@@ -23,8 +23,8 @@ public class QuickScanCardViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         this.exerciseImage = itemView.findViewById(R.id.exerciseImage);
-        this.exerciseTitle = itemView.findViewById(R.id.exerciseTitle);
-        this.exerciseArea = itemView.findViewById(R.id.exerciseArea);
+        this.exerciseTitle = itemView.findViewById(R.id.FName);
+        this.exerciseArea = itemView.findViewById(R.id.LName);
 
         view = itemView;
         context = view.getContext();

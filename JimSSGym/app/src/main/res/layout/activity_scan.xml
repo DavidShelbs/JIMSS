@@ -26,7 +26,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/exerciseTitle"
+                android:id="@+id/FName"
                 android:layout_width="325dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|center_horizontal|center_vertical"
@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/exerciseArea"
+                android:id="@+id/LName"
                 android:layout_width="326dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -57,7 +57,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/exerciseTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/FName" />
 
             <View
                 android:id="@+id/divider"
@@ -95,7 +95,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/view"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/exerciseTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/FName" />
 
                 <NumberPicker
                     android:id="@+id/reps"

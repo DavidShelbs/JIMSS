@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/exerciseTitle"
+            android:id="@+id/FName"
             android:layout_toRightOf="@id/exerciseImage"
             android:layout_toEndOf="@id/exerciseImage"
             android:text="Title"
@@ -32,7 +32,7 @@
             android:layout_marginStart="10dp" />
 
         <TextView
-            android:id="@+id/exerciseArea"
+            android:id="@+id/LName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/exerciseImage"
@@ -43,7 +43,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_below="@+id/exerciseTitle" />
+            android:layout_below="@+id/FName" />
 
     </RelativeLayout>
 

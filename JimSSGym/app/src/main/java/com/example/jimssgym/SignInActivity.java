@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,7 +25,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -66,6 +70,25 @@ public class SignInActivity extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                final String current_user_id = mAuth.getUid();
+                Map<String, Object> user_workout = new HashMap<>();
+                user_workout.put("name", mAuth.getCurrentUser().getDisplayName());
+                db.collection("users").document(current_user_id)
+                        .update(user_workout)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                System.out.println("DocumentSnapshot added with ID: " + current_user_id);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("Error adding document" + e);
+                            }
+                        });
                 Intent intent = new Intent(SignInActivity.this, UserSetupActivity.class);
                 SignInActivity.this.startActivity(intent);
                 // Successfully signed in

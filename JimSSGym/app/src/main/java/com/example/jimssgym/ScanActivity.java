@@ -1,6 +1,5 @@
 package com.example.jimssgym;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -60,7 +58,7 @@ public class ScanActivity extends AppCompatActivity {
         v.setBackgroundResource(android.R.color.transparent);
         final String qr_result = getIntent().getStringExtra("QR_RESULT");
 
-        exerciseTitle = findViewById(R.id.exerciseTitle);
+        exerciseTitle = findViewById(R.id.FName);
         exerciseTitle.setText(qr_result.toUpperCase());
 
         markAsComplete = findViewById(R.id.mark_as_complete);
@@ -172,7 +170,7 @@ public class ScanActivity extends AppCompatActivity {
                     }
                 });
 
-        exerciseArea = findViewById(R.id.exerciseArea);
+        exerciseArea = findViewById(R.id.LName);
         AnimationDrawable animation;
 
 

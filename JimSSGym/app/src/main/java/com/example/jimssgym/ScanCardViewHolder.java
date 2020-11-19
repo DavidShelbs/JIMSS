@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,8 +23,8 @@ public class ScanCardViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         this.exerciseImage = itemView.findViewById(R.id.exerciseImage);
-        this.exerciseTitle = itemView.findViewById(R.id.exerciseTitle);
-        this.exerciseArea = itemView.findViewById(R.id.exerciseArea);
+        this.exerciseTitle = itemView.findViewById(R.id.FName);
+        this.exerciseArea = itemView.findViewById(R.id.LName);
 
         view = itemView;
         context = view.getContext();

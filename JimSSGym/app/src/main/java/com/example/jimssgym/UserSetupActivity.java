@@ -92,7 +92,7 @@ public class UserSetupActivity extends AppCompatActivity implements AdapterView.
                 user_workout.put("weight", Integer.parseInt(heightInput.getText().toString()));
 
                 db.collection("users").document(current_user_id)
-                        .set(user_workout)
+                        .update(user_workout)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
