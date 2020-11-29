@@ -6,61 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".UserActivity">
 
-
     <Button
-        android:id="@+id/schedule"
-        android:layout_width="186dp"
-        android:layout_height="262dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:id="@+id/settings"
+        android:layout_width="360dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#007A33"
-        android:fontFamily="sans-serif-smallcaps"
-        android:paddingTop="200dp"
-        android:stateListAnimator="@null"
-        android:text="Calendar"
-        android:textAllCaps="false"
+        android:text="Settings"
+        android:textSize="30sp"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button1" />
-
+        app:layout_constraintTop_toBottomOf="@+id/edit_workout" />
 
     <Button
         android:id="@+id/edit_workout"
-        android:layout_width="186dp"
-        android:layout_height="262dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="120dp"
-        android:backgroundTint="#005F83"
-        android:fontFamily="sans-serif-smallcaps"
-        android:paddingTop="200dp"
+        android:layout_width="360dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#78BE20"
         android:text="Edit Workout"
-        android:textAllCaps="false"
+        android:textSize="30sp"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:stateListAnimator="@null"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/schedule" />
 
     <Button
-        android:id="@+id/settings"
-        android:layout_width="186dp"
-        android:layout_height="262dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="15dp"
-        android:backgroundTint="#78BE20"
-        android:fontFamily="sans-serif-smallcaps"
-        android:paddingTop="200dp"
-        android:stateListAnimator="@null"
-        android:text="Settings"
-        android:textAllCaps="false"
+        android:id="@+id/schedule"
+        android:layout_width="360dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#005F83"
+        android:text="Schedule"
+        android:textSize="30sp"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

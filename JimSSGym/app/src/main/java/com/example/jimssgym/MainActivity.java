@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Button your_page_button;
     private Button workout_button;
     private Button friends_button;
+    private Button info_button;
     private FirebaseAuth mAuth;
 
     @Override
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         your_page_button = findViewById(R.id.button3);
         workout_button = findViewById(R.id.button1);
         friends_button = findViewById(R.id.button4);
+        info_button = findViewById(R.id.button5);
 
 
         quick_scan_button.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ScanCardViewActivity.class));
             }
         });
+
         friends_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        info_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Capacity.class));
+            }
+        });
     }
 
     @Override
