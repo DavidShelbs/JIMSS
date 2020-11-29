@@ -1,5 +1,28 @@
-<resources>
-    <string name="app_name">WorkoutBodySelection</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name">UserSetup</string>
+    <string name="enter_height_inches">Enter Height (inches)</string>
+    <string name="enter_weight_lbs">Enter Weight (lbs)</string>
+
+    <string-array name="goal_entries">
+        <item> Select </item>;
+        <item> Lose Weight </item>;
+        <item> Build Muscle </item>;
+        <item> Improve Definition </item>;
+        <item> Improve General Fitness </item>;
+    </string-array>
+
+    <string-array name="workout_level">
+        <item> Select </item>;
+        <item> Beginner </item>;
+        <item> Intermediate </item>;
+        <item> Advanced </item>;
+    </string-array>
+
+
+
+
+<!--    <string name="app_name" tools:ignore="DuplicateDefinition">WorkoutBodySelection</string>-->
     <string name="chest">Chest</string>
     <string name="shoulders">Shoulders</string>
     <string name="back">Back</string>
@@ -109,6 +132,7 @@
     <string name="chestHeader">Chest</string>
     <string name="backHeader">Back</string>
     <string name="armsHeader">Arms</string>
-<!--    <string name="legs">Legs</string>-->
+    <!--    <string name="legs">Legs</string>-->
     <string name="go_back">Go Back</string>
+    <string name="next">Next</string>
 </resources>

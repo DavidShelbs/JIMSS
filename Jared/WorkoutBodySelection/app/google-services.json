@@ -1,0 +1,117 @@
+{
+  "project_info": {
+    "project_number": "625080167000",
+    "firebase_url": "https://fir-app-1039b.firebaseio.com",
+    "project_id": "fir-app-1039b",
+    "storage_bucket": "fir-app-1039b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625080167000:android:57fdcd67f2718fc787f82d",
+        "android_client_info": {
+          "package_name": "com.example.jimssgym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625080167000-qo4c7obutul3m76t4aseqgkf7b2h4pb3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jimssgym",
+            "certificate_hash": "5f4b46d93219eb3bf6dc68e2f5129a68c2bdc8fe"
+          }
+        },
+        {
+          "client_id": "625080167000-kbtgrl3d072ntvakshhr1h86n2d7em59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jimssgym",
+            "certificate_hash": "9bb6f30ea42b0d1d74c882ae43d4c688a0608fed"
+          }
+        },
+        {
+          "client_id": "625080167000-eamshghtnjnnelc2rl9cvtv1h0vu96k0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jimssgym",
+            "certificate_hash": "2e144479a4ae372f498eeb5b9dcb9f167cbb9ad4"
+          }
+        },
+        {
+          "client_id": "625080167000-sc82b9ure66iq19uldh1u6jl5sqol8e5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jimssgym",
+            "certificate_hash": "1afa85f21c571da0edc2ed42153f56be91153c01"
+          }
+        },
+        {
+          "client_id": "625080167000-ejelh8s43ljem0ka2qnanhc1g2b78va6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jimssgym",
+            "certificate_hash": "5c39127f570ea56c96af4839b7477347c84e7adb"
+          }
+        },
+        {
+          "client_id": "625080167000-mfqjfvmtjelgiofd3bm9tq84anfblili.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jimssgym",
+            "certificate_hash": "dfd6423f7c21542dc829e9c2924c3d34a21f0b31"
+          }
+        },
+        {
+          "client_id": "625080167000-3acualccd9ol6mdusa97afj9n3h2v9p7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfGsMfFhjwVPPb-Dy2eEEkXuOMVvTLfqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625080167000-3acualccd9ol6mdusa97afj9n3h2v9p7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625080167000:android:5fa075f4b040d27087f82d",
+        "android_client_info": {
+          "package_name": "com.example.workoutbodyselection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625080167000-3acualccd9ol6mdusa97afj9n3h2v9p7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfGsMfFhjwVPPb-Dy2eEEkXuOMVvTLfqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625080167000-3acualccd9ol6mdusa97afj9n3h2v9p7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
