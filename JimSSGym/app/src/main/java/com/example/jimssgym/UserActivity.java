@@ -197,7 +197,7 @@ public class UserActivity extends AppCompatActivity {
         settings_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(UserActivity.this, UserActivity.class));
+                startActivity(new Intent(UserActivity.this, SettingsActivity.class));
 
             }
         });

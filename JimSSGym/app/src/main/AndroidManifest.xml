@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jimssgym">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,26 +9,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:label="@string/app_name" android:name=".MainActivity">
+        <activity
+            android:name=".SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".UserActivity"/>
+        <activity
+            android:name=".AboutActivity"
+            android:label="About"
+            android:parentActivityName=".SettingsActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:label="@string/app_name"
             android:name=".QRReaderQuickScanActivity"
+            android:label="@string/app_name"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".QuickScanActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
-            android:label="@string/app_name"
             android:name=".QuickScanCardViewActivity"
+            android:label="@string/app_name"
             android:parentActivityName=".QRReaderQuickScanActivity" />
         <activity
-            android:label="Friends"
             android:name=".FriendsActivity"
+            android:label="Friends"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -41,15 +47,15 @@
             android:label="User"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:label="Calender"
             android:name=".FillCalenderActivity"
-            android:parentActivityName=".FriendsActivity"
-            android:noHistory="true" />
+            android:label="Calender"
+            android:noHistory="true"
+            android:parentActivityName=".FriendsActivity" />
         <activity
-            android:label="Friends"
             android:name=".CalenderActivity"
-            android:parentActivityName=".FriendsActivity"
-            android:noHistory="true" />
+            android:label="Friends"
+            android:noHistory="true"
+            android:parentActivityName=".FriendsActivity" />
         <activity
             android:name=".PopUpWorkoutActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
@@ -63,30 +69,35 @@
             android:name=".FriendCardViewActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
-            android:label="@string/app_name"
-            android:name=".UserSetupActivity" />
+            android:name=".UserSetupActivity"
+            android:label="@string/app_name" />
         <activity
-            android:label="@string/app_name"
-            android:name=".SignInActivity" />
+            android:name=".SignInActivity"
+            android:label="@string/app_name" />
         <activity
             android:name=".ScanActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
-            android:label="@string/app_name"
             android:name=".ScanCardViewActivity"
+            android:label="@string/app_name"
             android:parentActivityName=".QRReaderActivity" />
         <activity
-            android:label="@string/app_name"
             android:name=".QRReaderActivity"
+            android:label="@string/app_name"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:label="@string/app_name"
             android:name=".SuggestedWorkoutActivity"
+            android:label="@string/app_name"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:label="@string/app_name"
             android:name=".Capacity"
+            android:label="@string/app_name"
             android:parentActivityName=".MainActivity" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>
