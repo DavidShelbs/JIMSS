@@ -1,0 +1,85 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="User">
+
+        <EditTextPreference
+            app:key="userName"
+            app:title="User Name"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="notifications"
+            app:title="Notifications" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Privacy">
+
+        <ListPreference
+            app:defaultValue="Never"
+            app:entries="@array/reply_entries"
+            app:entryValues="@array/reply_values"
+            app:key="reply"
+            app:title="Allow Location"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="showCal"
+            app:title="Allow friends to see calender" />
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="sync"-->
+<!--            app:title="@string/sync_title" />-->
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:dependency="sync"-->
+<!--            app:key="attachment"-->
+<!--            app:summaryOff="@string/attachment_summary_off"-->
+<!--            app:summaryOn="@string/attachment_summary_on"-->
+<!--            app:title="@string/attachment_title" />-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="App">
+
+        <Preference
+            app:key="about_button"
+            app:title="About">
+
+            <intent
+                android:targetPackage="com.example.jimssgym"
+                android:targetClass="com.example.jimssgym.AboutActivity"/>
+
+        </Preference>
+
+        <Preference
+            app:key="link"
+            app:title="Link to Gym">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://studentrec.mst.edu/fitness-center/" />
+
+        </Preference>
+
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Account">
+        <Preference
+            app:key="logOut_button"
+            app:title="Log Out">
+
+        </Preference>
+
+        <Preference
+            app:key="delete_button"
+            app:title="Delete Account"/>
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
+

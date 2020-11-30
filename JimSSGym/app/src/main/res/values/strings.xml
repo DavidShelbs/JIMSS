@@ -14,26 +14,10 @@
     <string name="enter_height_inches">Enter Height (inches)</string>
     <string name="enter_weight_lbs">Enter Weight (lbs)</string>
 
-    <string-array name="goal_entries">
-        <item> Select </item>;
-        <item> Lose Weight </item>;
-        <item> Build Muscle </item>;
-        <item> Improve Mobility / Flexibility </item>;
-        <item> Improve Endurance </item>;
-        <item> Improve Definition </item>;
-        <item> Improve General Fitness </item>;
-        <item> Feel More Confident </item>;
-    </string-array>
-
-    <string-array name="workout_level">
-        <item> Select </item>;
-        <item> Beginner </item>;
-        <item> Intermediate </item>;
-        <item> Advanced </item>;
-    </string-array>
-
     <string name="chest">Chest</string>
+
     <string name="shoulders">Shoulders</string>
+
     <string name="back">Back</string>
     <string name="arms">Arms</string>
     <string name="legs">Legs</string>
@@ -141,7 +125,39 @@
     <string name="chestHeader">Chest</string>
     <string name="backHeader">Back</string>
     <string name="armsHeader">Arms</string>
-    <!--    <string name="legs">Legs</string>-->
     <string name="go_back">Go Back</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <!--    <string name="legs">Legs</string>-->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Preference Titles -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Messages Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+
+    <!-- Sync Preferences -->
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string-array name="goal_entries">
+        <item> Select </item>;
+        <item> Lose Weight </item>;
+        <item> Build Muscle </item>;
+        <item> Improve Mobility / Flexibility </item>;
+        <item> Improve Endurance </item>;
+        <item> Improve Definition </item>;
+        <item> Improve General Fitness </item>;
+        <item> Feel More Confident </item>;
+    </string-array>
+    <string-array name="workout_level">
+        <item> Select </item>;
+        <item> Beginner </item>;
+        <item> Intermediate </item>;
+        <item> Advanced </item>;
+    </string-array>
 
 </resources>
