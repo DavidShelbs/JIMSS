@@ -41,6 +41,10 @@
             android:label="User"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".UserActivity" />
+        <activity
             android:label="Calender"
             android:name=".FillCalenderActivity"
             android:parentActivityName=".FriendsActivity"
