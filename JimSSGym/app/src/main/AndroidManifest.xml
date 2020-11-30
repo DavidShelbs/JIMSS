@@ -38,9 +38,10 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".UserActivity"
+            android:label="User"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:label="Friends"
+            android:label="Calender"
             android:name=".FillCalenderActivity"
             android:parentActivityName=".FriendsActivity"
             android:noHistory="true" />
