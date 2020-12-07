@@ -6,11 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+
     <com.github.mikephil.charting.charts.LineChart
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:id="@+id/chart">
 
     </com.github.mikephil.charting.charts.LineChart>
+
+
+    <RelativeLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavView_Bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bottom_border"
+            app:itemIconSize="50dp"
+            app:labelVisibilityMode="unlabeled"
+            app:itemIconTint="#005F83"
+            app:menu="@menu/bottom_navigation_menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

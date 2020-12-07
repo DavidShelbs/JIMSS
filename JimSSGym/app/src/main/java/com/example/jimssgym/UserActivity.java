@@ -3,6 +3,7 @@ package com.example.jimssgym;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -199,6 +201,34 @@ public class UserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(UserActivity.this, SettingsActivity.class));
 
+            }
+        });
+
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home:
+                        Intent intent = new Intent(UserActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.workout:
+                        Intent intent2 = new Intent(UserActivity.this, ScanCardViewActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.qr:
+                        Intent intent3 = new Intent(UserActivity.this, QRReaderQuickScanActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.friends:
+                        Intent intent4 = new Intent(UserActivity.this, FriendsActivity.class);
+                        startActivity(intent4);
+                        break;
+                }
+                return false;
             }
         });
 

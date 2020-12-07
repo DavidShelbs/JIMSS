@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -40,6 +42,33 @@ public class QRReaderQuickScanActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), QuickScanCardViewActivity.class);
                 intent.putExtra("QR_RESULT", result.getText());
                 startActivity(intent);
+            }
+        });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.settings:
+                        Intent intent = new Intent(QRReaderQuickScanActivity.this, UserActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.workout:
+                        Intent intent2 = new Intent(QRReaderQuickScanActivity.this, ScanCardViewActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.home:
+                        Intent intent3 = new Intent(QRReaderQuickScanActivity.this, MainActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.friends:
+                        Intent intent4 = new Intent(QRReaderQuickScanActivity.this, FriendsActivity.class);
+                        startActivity(intent4);
+                        break;
+                }
+                return false;
             }
         });
     }

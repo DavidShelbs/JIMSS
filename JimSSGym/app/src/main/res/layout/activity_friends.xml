@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FriendsActivity">
 
 
@@ -45,6 +46,25 @@
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="1dp" />
 
+
+    <RelativeLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavView_Bar"
+            app:itemIconSize="50dp"
+            app:menu="@menu/bottom_navigation_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:labelVisibilityMode="unlabeled"
+            app:itemIconTint="#005F83"
+            android:background="@drawable/bottom_border"></com.google.android.material.bottomnavigation.BottomNavigationView>
+    </RelativeLayout>
 
 
 </RelativeLayout>

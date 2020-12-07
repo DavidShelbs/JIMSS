@@ -2,11 +2,13 @@ package com.example.jimssgym;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -14,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
@@ -73,6 +77,33 @@ public class FriendsActivity extends AppCompatActivity implements AdapterView.On
 //                Toast.makeText(FriendsActivity.this, "Clicked add", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(FriendsActivity.this, FriendCardViewActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.settings:
+                        Intent intent = new Intent(FriendsActivity.this, UserActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.workout:
+                        Intent intent2 = new Intent(FriendsActivity.this, ScanCardViewActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.qr:
+                        Intent intent3 = new Intent(FriendsActivity.this, QRReaderQuickScanActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.home:
+                        Intent intent4 = new Intent(FriendsActivity.this, MainActivity.class);
+                        startActivity(intent4);
+                        break;
+                }
+                return false;
             }
         });
     }

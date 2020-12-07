@@ -9,39 +9,58 @@
     <Button
         android:id="@+id/settings"
         android:layout_width="360dp"
-        android:layout_height="180dp"
+        android:layout_height="140dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="#007A33"
         android:text="Settings"
-        android:textSize="30sp"
         android:textColor="#FFFFFF"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_workout" />
 
     <Button
         android:id="@+id/edit_workout"
         android:layout_width="360dp"
-        android:layout_height="180dp"
+        android:layout_height="140dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="#78BE20"
         android:text="Edit Workout"
-        android:textSize="30sp"
         android:textColor="#FFFFFF"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/schedule" />
 
     <Button
         android:id="@+id/schedule"
         android:layout_width="360dp"
-        android:layout_height="180dp"
+        android:layout_height="140dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
         android:backgroundTint="#005F83"
         android:text="Schedule"
-        android:textSize="30sp"
         android:textColor="#FFFFFF"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavView_Bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bottom_border"
+            app:itemIconSize="50dp"
+            app:labelVisibilityMode="unlabeled"
+            app:itemIconTint="#005F83"
+            app:menu="@menu/bottom_navigation_menu"></com.google.android.material.bottomnavigation.BottomNavigationView>
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
