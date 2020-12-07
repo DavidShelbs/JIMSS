@@ -11,8 +11,8 @@ public class GetFileInfo {
   	int capacity_number;
     String date_time;
     int weekday;
-    int hour;
-    int minute;
+    float hour;
+    float minute;
     double x_value;
     
     public DataEntry(int x, String y){
@@ -30,6 +30,15 @@ public class GetFileInfo {
         System.out.println(e);
       }
     }
+
+    public float getFloatValue(){
+      float hour_value = hour - 6;
+      hour_value = hour_value / 3.0f;
+
+      float minute_value = minute / 180.0f;
+
+      return hour_value + minute_value;
+    }
   }  
 
   public static int getDayNumberOld(Date date) {
@@ -42,9 +51,7 @@ public class GetFileInfo {
 
     ArrayList<Integer> capacity_nums = new ArrayList<Integer>();
     ArrayList<String> dates = new ArrayList<String>();
-
   	ArrayList<DataEntry> data_entries = new ArrayList<>();
-
     String temp = "";
 
 
@@ -71,7 +78,17 @@ public class GetFileInfo {
       }
 
       for(int i=0; i<capacity_nums.size(); i++){
-        System.out.println(data_entries.get(i).weekday);    
+               
+        String date_info = data_entries.get(i).date_time;
+        int iend = date_info.indexOf(":");
+        String abrv_date = date_info.substring(0, iend);
+
+        if (abrv_date.equals("11/16/20")) {
+          System.out.println(abrv_date);
+          System.out.println(data_entries.get(i).getFloatValue());
+          System.out.println(data_entries.get(i).capacity_number);
+        }
+
       }
 
     } catch (FileNotFoundException e) {
